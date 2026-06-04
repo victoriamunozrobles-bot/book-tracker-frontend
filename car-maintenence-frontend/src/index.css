@@ -1,1 +1,15 @@
-@import url("./src/components/Header/Header.css");
+@import url("./components/App/App.css");
+@import url("./components/Header/Header.css");
+@import url("./components/Login/login.css");
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  background-color: #ffe7fd;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}

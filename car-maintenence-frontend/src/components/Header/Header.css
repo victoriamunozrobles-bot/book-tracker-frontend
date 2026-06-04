@@ -1,0 +1,32 @@
+.header {
+  margin: 5px;
+  min-height: 70px;
+  font-family: "Inter", Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3%;
+  background-color: #ffffff;
+  border-radius: 100px;
+}
+.header__title {
+  margin: 0;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header__link {
+  min-width: 154px;
+  min-height: 60px;
+  border-radius: 100px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  border: 1px solid #2f71e5;
+}
