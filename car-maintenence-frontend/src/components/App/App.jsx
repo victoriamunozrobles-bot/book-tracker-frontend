@@ -6,7 +6,9 @@ function App() {
   return (
     <div className="page">
       <Header />
-      <Login />
+      <main className="page__main-content">
+        <Login />
+      </main>
     </div>
   );
 }
