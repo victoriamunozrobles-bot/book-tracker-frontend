@@ -3,6 +3,7 @@
 @import url("./components/Login/login.css");
 @import url("./components/Register/register.css");
 @import url("./components/BookSearch/bookSearch.css");
+@import url("./components/BookCard/bookCard.css");
 
 body {
   margin: 0;

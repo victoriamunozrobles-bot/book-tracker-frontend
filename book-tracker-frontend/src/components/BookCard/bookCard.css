@@ -1,0 +1,92 @@
+.book-card {
+  background-color: white;
+  display: grid;
+  max-width: 80vw;
+  padding: 2%;
+  border-radius: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas: "image description";
+  position: relative;
+}
+
+.book-card__close-button {
+  width: 18px;
+  height: 18px;
+  background: transparent url("../../images/close-icon.svg") center no-repeat;
+  background-size: 18px 18px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  right: -18px;
+  padding: 0;
+  margin: 0;
+}
+
+.book-card__description {
+  grid-area: description;
+  list-style: none;
+  display: grid;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto 1fr auto auto;
+  grid-template-areas:
+    "state . . "
+    "title title title"
+    "author author ."
+    "synopsis synopsis synopsis"
+    "chip chip chip";
+}
+
+.book-card__title {
+  grid-area: title;
+  font-family: "Lobster", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.book-card__author {
+  grid-area: author;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: italic;
+  font-size: 20px;
+}
+
+.book-card__synopsis {
+  grid-area: synopsis;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+.book-card__chip {
+  grid-area: chip;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+  border-radius: 50px;
+  padding: 5px;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.book-card__chip--genre {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.book-card__chip--pages {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.book-card__chip--state {
+  grid-area: state;
+  background-color: #dcfce7;
+  color: #166534;
+  justify-self: start;
+}
