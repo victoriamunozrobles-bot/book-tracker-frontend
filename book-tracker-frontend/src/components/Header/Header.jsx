@@ -5,7 +5,7 @@ export default function Header({ loggedIn, email, onSignOut }) {
 
   return (
     <header className="header">
-      <h2 className="header__title">Mi auto</h2>
+      <h2 className="header__title">Book Tracker</h2>
       <div className="header__container">
         {loggedIn ? (
           <>
