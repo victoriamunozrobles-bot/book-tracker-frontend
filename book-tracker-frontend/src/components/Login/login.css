@@ -54,6 +54,8 @@
   font-weight: 500;
   font-family: "Inter", Arial, sans-serif;
   cursor: pointer;
+  min-width: 170px;
+  align-self: center;
 }
 
 .login_form__button:hover {
