@@ -1,0 +1,36 @@
+.book-search__search-bar {
+  border: 2px solid pink;
+  border-radius: 100px;
+  background-color: white;
+  width: 80vw;
+}
+.book-search__form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-search__input {
+  border: none;
+  background-color: transparent;
+  padding: 5px;
+}
+
+.book-search__input::placeholder {
+  color: #cccccc;
+}
+
+.book-search__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.book-search__button img {
+  width: 24px;
+  height: auto;
+  object-fit: contain;
+}
