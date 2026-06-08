@@ -1,6 +1,7 @@
 @import url("./components/App/App.css");
 @import url("./components/Header/Header.css");
 @import url("./components/Login/login.css");
+@import url("./components/Register/register.css");
 
 body {
   margin: 0;
