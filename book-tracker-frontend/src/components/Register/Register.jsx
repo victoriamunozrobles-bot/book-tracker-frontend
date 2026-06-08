@@ -62,15 +62,17 @@ export default function Register({ onRegister }) {
           onChange={handleChangePassword}
           required
         />
-        <button className="register_form__button" type="submit">
-          Regístrate
-        </button>
+        <div className="form__actions">
+          <button className="register_form__button" type="submit">
+            Regístrate
+          </button>
+          <div className="register__signup">
+            <Link className="register__signup_link" to="/signin">
+              o Iniciar sesión
+            </Link>
+          </div>
+        </div>
       </form>
-      <div className="register__signup">
-        <Link className="register__signup_link" to="/signin">
-          o Iniciar sesión
-        </Link>
-      </div>
     </div>
   );
 }
