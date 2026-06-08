@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Register({ onRegister }) {
+export default function Register({ handleRegister }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
-  };
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
   };
 
   const handleChangeName = (e) => {
@@ -20,10 +17,11 @@ export default function Register({ onRegister }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden. Por favor, revisa.");
       return;
     }
-    onRegister(email, password);
+    handleRegister(name, email, password);
   };
 
   return (
@@ -51,15 +49,15 @@ export default function Register({ onRegister }) {
           type="password"
           placeholder="Contraseña"
           value={password}
-          onChange={handleChangePassword}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <input
           className="register_form__input"
           type="password"
           placeholder="Volver a escribir la contraseña"
-          value={password}
-          onChange={handleChangePassword}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
         <div className="form__actions">

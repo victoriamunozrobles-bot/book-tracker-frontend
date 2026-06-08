@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Login({ onLogin }) {
+export default function Login({ handleLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,8 +17,8 @@ export default function Login({ onLogin }) {
     if (!email || !password) {
       return;
     }
-    onLogin(email, password);
-    onLogin(email, password);
+    handleLogin(email, password);
+    handleLogin(email, password);
   };
 
   return (
