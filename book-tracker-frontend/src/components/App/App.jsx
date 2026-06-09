@@ -10,6 +10,7 @@ import BookSearch from "../BookSearch/BookSearch.jsx";
 import { searchBooks } from "../../utils/googleBooks.js";
 import SideBar from "../SideBar/SideBar.jsx";
 import BookGallery from "../BookGallery/BookGallery.jsx";
+import Library from "../Library/Library.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -17,6 +18,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
+  const [savedBooks, setSavedBooks] = useState([]);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -40,6 +42,16 @@ function App() {
     }
   }, [navigate]);
 
+  const handleSaveBook = (bookToSave) => {
+    const isAlreadySaved = savedBooks.some((book) => book.id === bookToSave.id);
+
+    if (!isAlreadySaved) {
+      setSavedBooks([bookToSave, ...savedBooks]);
+      console.log("¡Libro guardado con éxito!", bookToSave.volumeInfo.title);
+    } else {
+      console.log("Este libro ya está en tu biblioteca.");
+    }
+  };
   const handleLogin = (email, password) => {
     auth
 
@@ -117,9 +129,22 @@ function App() {
               path="/"
               element={
                 loggedIn ? (
+                  <Library savedBooks={savedBooks} />
+                ) : (
+                  <Navigate to="/signin" replace />
+                )
+              }
+            />
+            <Route
+              path="/search"
+              element={
+                loggedIn ? (
                   <>
                     <BookSearch onSearch={handleSearch} />
-                    <BookGallery searchResults={searchResults} />
+                    <BookGallery
+                      searchResults={searchResults}
+                      onSaveBook={handleSaveBook}
+                    />
                   </>
                 ) : (
                   <Navigate to="/signin" replace />

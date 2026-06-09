@@ -1,7 +1,7 @@
 import exampleImg from "../../images/example.webp";
 import add from "../../images/add-icon.svg";
 
-export default function BookCard({ book, onCardClose }) {
+export default function BookCard({ book, onCardClose, onSaveBook }) {
   const info = book.volumeInfo;
 
   const title = info.title || "Título desconocido";
@@ -37,7 +37,11 @@ export default function BookCard({ book, onCardClose }) {
           <li className="book-card__tag">{genre}</li>
         </ul>
 
-        <button className="book-card__add-button">
+        <button
+          className="book-card__add-button"
+          type="button"
+          onClick={() => onSaveBook(book)}
+        >
           <img
             className="book-card__add-icon"
             src={add}

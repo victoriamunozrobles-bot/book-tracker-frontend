@@ -2,7 +2,7 @@ import { useState } from "react";
 import BookCard from "../BookCard/BookCard.jsx";
 import "./BookGallery.css";
 
-export default function BookGallery({ searchResults }) {
+export default function BookGallery({ searchResults, onSaveBook }) {
   const [selectedBook, setSelectedBook] = useState(null);
 
   return (
@@ -36,6 +36,7 @@ export default function BookGallery({ searchResults }) {
           <BookCard
             book={selectedBook}
             onCardClose={() => setSelectedBook(null)}
+            onSaveBook={onSaveBook}
           />
         </div>
       )}

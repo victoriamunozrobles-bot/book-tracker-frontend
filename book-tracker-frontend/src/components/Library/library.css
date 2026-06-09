@@ -1,0 +1,38 @@
+.library {
+  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.library__header {
+  margin-bottom: 40px;
+  border-bottom: 4px solid #0a100d;
+  padding-bottom: 20px;
+}
+
+.library__title {
+  font-family: monospace;
+  font-size: 3rem;
+  color: #0a100d;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.library__subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 0;
+}
+
+.library__empty-state {
+  background-color: #fceea7;
+  border: 4px dashed #0a100d;
+  padding: 60px 20px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 1.3rem;
+  color: #0a100d;
+  font-weight: bold;
+  box-shadow: 8px 8px 0px #0a100d;
+}
