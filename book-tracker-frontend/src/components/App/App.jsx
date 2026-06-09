@@ -7,45 +7,56 @@ import "../../index.css";
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
-import BookCard from "../BookCard/BookCard.jsx";
 import { searchBooks } from "../../utils/googleBooks.js";
 import SideBar from "../SideBar/SideBar.jsx";
+import BookGallery from "../BookGallery/BookGallery.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
+
     if (jwt) {
       auth
+
         .checkToken(jwt)
+
         .then((res) => {
           if (res) {
             setLoggedIn(true);
+
             setUserEmail(res.data.email);
+
             navigate("/");
           }
         })
+
         .catch((err) => console.error(err));
     }
   }, [navigate]);
 
   const handleLogin = (email, password) => {
     auth
+
       .authorize(email, password)
+
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
+
           setLoggedIn(true);
+
           setUserEmail(email);
+
           navigate("/");
         }
       })
+
       .catch((err) => {
         console.error(err);
       });
@@ -53,10 +64,13 @@ function App() {
 
   const handleRegister = (name, email, password) => {
     auth
+
       .register(email, password)
+
       .then(() => {
         navigate("/signin");
       })
+
       .catch((err) => {
         console.error(err);
       });
@@ -67,8 +81,10 @@ function App() {
       .then((results) => {
         setSearchResults(results);
       })
+
       .catch((err) => {
         console.error(err);
+
         setSearchResults([]);
       });
   };
@@ -76,8 +92,11 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       api
+
         .getUserInfo()
+
         .then((userData) => setCurrentUser(userData))
+
         .catch((err) => console.error(err));
     }
   }, [loggedIn]);
@@ -99,20 +118,7 @@ function App() {
                 loggedIn ? (
                   <>
                     <BookSearch onSearch={handleSearch} />
-                    <ul
-                      className="cards-grid"
-                      style={{ padding: 0, listStyle: "none" }}
-                    >
-                      {searchResults.map((book) => (
-                        <BookCard
-                          key={book.id}
-                          book={book}
-                          onCardClose={() =>
-                            console.log("Cerrar tarjeta", book.id)
-                          }
-                        />
-                      ))}
-                    </ul>
+                    <BookGallery searchResults={searchResults} />
                   </>
                 ) : (
                   <Navigate to="/signin" replace />

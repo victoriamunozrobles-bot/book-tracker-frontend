@@ -1,4 +1,5 @@
 import exampleImg from "../../images/example.webp";
+import add from "../../images/add-icon.svg";
 
 export default function BookCard({ book, onCardClose }) {
   const info = book.volumeInfo;
@@ -11,24 +12,39 @@ export default function BookCard({ book, onCardClose }) {
   const coverImage = info.imageLinks?.thumbnail || exampleImg;
 
   return (
-    <li className="book-card">
-      <img className="book-card__cover" src={coverImage} />
+    <article className="book-card" onClick={(e) => e.stopPropagation()}>
+      <img className="book-card__image" src={coverImage} alt={title} />
       <button
         aria-label="Cerrar modal"
         className="book-card__close-button"
         type="button"
         onClick={() => onCardClose(book)}
-      ></button>
-      <ul className="book-card__description">
-        <span className="book-card__chip book-card__chip--state">Leyendo</span>
-        <li className="book-card__title">{title}</li>
-        <li className="book-card__author">{author}</li>
-        <li className="book-card__synopsis">{synopsis}</li>
-        <li className="book-card__chip">
-          <li className="book-card__chip book-card__chip--pages">{pages}</li>
-          <li className="book-card__chip book-card__chip--genre">{genre}</li>
-        </li>
-      </ul>
-    </li>
+      >
+        X
+      </button>
+      <div className="book-card__content">
+        <div className="book-card__header">
+          <h2 className="book-card__title">{title}</h2>
+          <p className="book-card__author">{author}</p>
+        </div>
+
+        <div className="book-card__synopsis-container">
+          <p className="book-card__synopsis">{synopsis}</p>
+        </div>
+
+        <ul className="book-card__tags">
+          <li className="book-card__tag">{pages} págs</li>
+          <li className="book-card__tag">{genre}</li>
+        </ul>
+
+        <button className="book-card__add-button">
+          <img
+            className="book-card__add-icon"
+            src={add}
+            alt="Botón para agregar a biblioteca."
+          />
+        </button>
+      </div>
+    </article>
   );
 }
