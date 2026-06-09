@@ -19,28 +19,27 @@ function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
   const [savedBooks, setSavedBooks] = useState([]);
+  const [isCheckingToken, setIsCheckingToken] = useState(true);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
-
     if (jwt) {
       auth
-
         .checkToken(jwt)
-
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-
             setUserEmail(res.data.email);
-
-            navigate("/");
           }
         })
-
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => {
+          setIsCheckingToken(false);
+        });
+    } else {
+      setIsCheckingToken(false);
     }
-  }, [navigate]);
+  }, []);
 
   const handleSaveBook = (bookToSave) => {
     const isAlreadySaved = savedBooks.some((book) => book.id === bookToSave.id);
@@ -112,6 +111,10 @@ function App() {
         .catch((err) => console.error(err));
     }
   }, [loggedIn]);
+
+  if (isCheckingToken) {
+    return null;
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
