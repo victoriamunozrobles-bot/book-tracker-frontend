@@ -1,8 +1,14 @@
 import searchIcon from "../../images/search-icon.svg";
+import { useState } from "react";
 
-export default function BookSearch() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+export default function BookSearch({ onSearch }) {
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim() !== "") {
+      onSearch(query);
+    }
   };
 
   return (
@@ -20,6 +26,8 @@ export default function BookSearch() {
           type="text"
           minLength="2"
           maxLength="40"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
         <button className="book-search__button" type="submit">
           <img src={searchIcon} alt="Ícono de búsqueda" />

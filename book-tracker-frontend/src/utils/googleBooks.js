@@ -1,14 +1,20 @@
-export const searchGoogleBooks = (searchQuery) => {
-  const formattedQuery = searchQuery.split(" ").join("+");
+const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
+
+const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
+
+export const searchBooks = (query) => {
+  const formattedQuery = query.split(" ").join("+");
 
   return fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${formattedQuery}&maxResults=10`,
+    `${GOOGLE_BOOKS_API_URL}?q=${formattedQuery}&maxResults=12&key=${API_KEY}`,
   )
     .then((res) => {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Error al buscar en Google Books: ${res.status}`);
+      return Promise.reject(
+        `Error al contactar con Google Books: ${res.status}`,
+      );
     })
     .then((data) => {
       return data.items || [];

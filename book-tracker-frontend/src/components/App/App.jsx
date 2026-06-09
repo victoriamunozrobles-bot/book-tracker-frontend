@@ -9,10 +9,12 @@ import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
 import BookCard from "../BookCard/BookCard.jsx";
+import { searchBooks } from "../../utils/googleBooks.js";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
@@ -31,7 +33,7 @@ function App() {
         })
         .catch((err) => console.error(err));
     }
-  }, []);
+  }, [navigate]);
 
   const handleLogin = (email, password) => {
     auth
@@ -60,6 +62,17 @@ function App() {
       });
   };
 
+  const handleSearch = (query) => {
+    searchBooks(query)
+      .then((results) => {
+        setSearchResults(results);
+      })
+      .catch((err) => {
+        console.error(err);
+        setSearchResults([]);
+      });
+  };
+
   useEffect(() => {
     if (loggedIn) {
       api
@@ -81,8 +94,21 @@ function App() {
               element={
                 loggedIn ? (
                   <>
-                    <BookSearch />
-                    <BookCard />
+                    <BookSearch onSearch={handleSearch} />
+                    <ul
+                      className="cards-grid"
+                      style={{ padding: 0, listStyle: "none" }}
+                    >
+                      {searchResults.map((book) => (
+                        <BookCard
+                          key={book.id}
+                          book={book}
+                          onCardClose={() =>
+                            console.log("Cerrar tarjeta", book.id)
+                          }
+                        />
+                      ))}
+                    </ul>
                   </>
                 ) : (
                   <Navigate to="/signin" replace />

@@ -22,9 +22,17 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._getHeaders(),
-    }).then(this._checkResponse);
+    console.log("💻 Servidor Falso: Simulando obtener info de usuario...");
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Le devolvemos a React un usuario inventado para que no se rompa
+        resolve({
+          _id: "123",
+          email: "usuario@frontend.com",
+          name: "Estrella del Código",
+        });
+      }, 500);
+    });
   }
 
   getInitialCards() {
