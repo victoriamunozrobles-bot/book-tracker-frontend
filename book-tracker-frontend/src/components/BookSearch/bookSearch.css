@@ -1,35 +1,62 @@
 .book-search__search-bar {
-  background-color: #abc4ab;
-  margin: 10px;
-  box-shadow:
-    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin: 0 auto 40px auto;
+  max-width: 600px;
 }
 .book-search__form {
   display: flex;
-  justify-content: space-between;
+  background-color: #fdfbf7;
+  border: 3px solid #0a100d;
+  border-radius: 0px;
+  box-shadow: 3px 3px 0px #0a100d;
+  transition: all 0.2s ease;
+}
+
+.book-search__form:focus-within {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #0a100d;
 }
 
 .book-search__input {
+  flex: 1;
+  padding: 15px 20px;
+  font-size: 1.1rem;
+  font-family: monospace;
+  font-weight: bold;
+  color: #0a100d;
+  background-color: transparent;
   border: none;
-  background-color: #abc4ab;
-  padding: 5px;
-  width: 100%;
-  color: #6d4c3d;
+  outline: none;
+}
+
+.book-search-input:focus {
+  background-color: #c8b9eb;
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #0a100d;
 }
 
 .book-search__input::placeholder {
   color: #6d4c3d;
+  font-weight: normal;
 }
 
 .book-search__button {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 25px;
   background-color: transparent;
   border: none;
+  border-left: 3px solid #0a100d;
   cursor: pointer;
-  padding: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.book-search-button:hover {
+  background-color: #f4c4d9;
+}
+
+.book-search-button:active {
+  background-color: #c8b9eb;
 }
 
 .book-search__button img {
