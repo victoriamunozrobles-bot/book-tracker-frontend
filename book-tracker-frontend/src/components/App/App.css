@@ -1,11 +1,22 @@
 .page {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
   min-height: 100vh;
-  width: 100%;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "sidebar mainContent";
+  background-color: #abc4ab;
+}
+
+.page__sidebar {
+  grid-area: sidebar;
 }
 
 .page__main-content {
-  display: grid;
-  place-items: center;
+  background-color: #dcc9b6;
+  grid-area: mainContent;
+  margin: 12px;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }

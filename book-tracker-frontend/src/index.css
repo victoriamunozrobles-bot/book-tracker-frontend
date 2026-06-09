@@ -1,5 +1,5 @@
 @import url("./components/App/App.css");
-@import url("./components/Header/Header.css");
+@import url("./components/SideBar/sideBar.css");
 @import url("./components/Login/login.css");
 @import url("./components/Register/register.css");
 @import url("./components/BookSearch/bookSearch.css");
@@ -8,11 +8,4 @@
 body {
   margin: 0;
   padding: 0;
-}
-
-#root {
-  background-color: #ffe7fd;
-  min-height: 100vh;
-  width: 100%;
-  overflow: hidden;
 }

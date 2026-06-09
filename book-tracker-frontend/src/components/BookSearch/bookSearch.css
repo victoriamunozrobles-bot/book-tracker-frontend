@@ -1,8 +1,9 @@
 .book-search__search-bar {
-  border: 2px solid pink;
-  border-radius: 100px;
-  background-color: white;
-  width: 80vw;
+  background-color: #abc4ab;
+  margin: 10px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 .book-search__form {
   display: flex;
@@ -11,12 +12,14 @@
 
 .book-search__input {
   border: none;
-  background-color: transparent;
+  background-color: #abc4ab;
   padding: 5px;
+  width: 100%;
+  color: #6d4c3d;
 }
 
 .book-search__input::placeholder {
-  color: #cccccc;
+  color: #6d4c3d;
 }
 
 .book-search__button {

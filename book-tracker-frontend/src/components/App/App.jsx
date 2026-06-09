@@ -4,12 +4,12 @@ import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import "../../index.css";
-import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
 import BookCard from "../BookCard/BookCard.jsx";
 import { searchBooks } from "../../utils/googleBooks.js";
+import SideBar from "../SideBar/SideBar.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -85,7 +85,11 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header loggedIn={loggedIn} userEmail={userEmail} />
+        <SideBar
+          classname="page__sideBar"
+          loggedIn={loggedIn}
+          userEmail={userEmail}
+        />
 
         <main className="page__main-content">
           <Routes>
