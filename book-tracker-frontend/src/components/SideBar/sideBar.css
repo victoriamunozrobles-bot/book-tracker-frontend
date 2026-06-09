@@ -21,17 +21,32 @@
 
 .sidebar__link {
   text-decoration: none;
-  color: #333;
-  font-weight: 600;
+  color: #0a100d;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.1rem;
   padding: 12px 15px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.4);
-  transition: all 0.3s ease;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background-color: #fdfbf7;
+  border: 1px solid #0a100d;
+  box-shadow: 2px 2px 0px #0a100d;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sidebar__link:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  transform: translateX(5px);
+  background-color: #f4c4d9;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #0a100d;
+}
+
+.sidebar__link:active {
+  background-color: #c8b9eb;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #0a100d;
 }
 
 .sidebar__footer {
