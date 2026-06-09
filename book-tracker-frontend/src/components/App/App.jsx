@@ -65,7 +65,7 @@ function App() {
   const handleRegister = (name, email, password) => {
     auth
 
-      .register(email, password)
+      .register(name, email, password)
 
       .then(() => {
         navigate("/signin");
@@ -108,6 +108,7 @@ function App() {
           classname="page__sideBar"
           loggedIn={loggedIn}
           userEmail={userEmail}
+          userName={currentUser.name || "Lector"}
         />
 
         <main className="page__main-content">
