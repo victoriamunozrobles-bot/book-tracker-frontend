@@ -27,6 +27,18 @@
   border: 3px solid #0a100d;
   box-shadow: 4px 4px 0px #0a100d;
   margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar__avatar:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #0a100d;
+}
+
+.sidebar__avatar:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #0a100d;
 }
 
 .sidebar__greeting {

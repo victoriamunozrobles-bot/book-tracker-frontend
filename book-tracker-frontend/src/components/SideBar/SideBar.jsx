@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 
-export default function SideBar({ loggedIn, userEmail, userName = "Usuario" }) {
-  const avatarUrl = `https://api.dicebear.com/9.x/pixel-art/svg?seed=${userName}`;
+export default function SideBar({
+  loggedIn,
+  userEmail,
+  userName = "Usuario",
+  onEditAvatarClick,
+  userAvatar,
+}) {
+  const defaultAvatar = `https://api.dicebear.com/9.x/pixel-art/svg?seed=${userName}`;
+  const finalAvatarUrl = userAvatar ? userAvatar : defaultAvatar;
 
   return (
     <aside className="sidebar">
@@ -11,9 +18,10 @@ export default function SideBar({ loggedIn, userEmail, userName = "Usuario" }) {
       </Link>
       <div className="sidebar__profile">
         <img
-          src={avatarUrl}
+          src={finalAvatarUrl}
           alt={`Avatar de ${userName}`}
           className="sidebar__avatar"
+          onClick={onEditAvatarClick}
         />
         <h2 className="sidebar__greeting">Hola, {userName}</h2>
       </div>

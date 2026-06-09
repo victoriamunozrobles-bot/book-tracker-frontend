@@ -11,6 +11,7 @@ import { searchBooks } from "../../utils/googleBooks.js";
 import SideBar from "../SideBar/SideBar.jsx";
 import BookGallery from "../BookGallery/BookGallery.jsx";
 import Library from "../Library/Library.jsx";
+import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -19,10 +20,30 @@ function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
   const [savedBooks, setSavedBooks] = useState([]);
-  const [isCheckingToken, setIsCheckingToken] = useState(true);
+  const [isCheckingToken, setIsCheckingToken] = useState(
+    !!localStorage.getItem("jwt"),
+  );
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(true);
+  };
+
+  const closeAllPopups = () => {
+    setIsEditAvatarPopupOpen(false);
+  };
+
+  const handleUpdateAvatar = (newAvatarUrl) => {
+    setCurrentUser((prevUser) => ({
+      ...prevUser,
+      avatar: newAvatarUrl,
+    }));
+    closeAllPopups();
+  };
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
+
     if (jwt) {
       auth
         .checkToken(jwt)
@@ -36,8 +57,6 @@ function App() {
         .finally(() => {
           setIsCheckingToken(false);
         });
-    } else {
-      setIsCheckingToken(false);
     }
   }, []);
 
@@ -124,6 +143,8 @@ function App() {
           loggedIn={loggedIn}
           userEmail={userEmail}
           userName={currentUser.name || "Lector"}
+          userAvatar={currentUser.avatar}
+          onEditAvatarClick={handleEditAvatarClick}
         />
 
         <main className="page__main-content">
@@ -183,6 +204,13 @@ function App() {
             />
           </Routes>
         </main>
+        {isEditAvatarPopupOpen && (
+          <EditAvatar
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
+          />
+        )}
       </div>
     </CurrentUserContext.Provider>
   );
