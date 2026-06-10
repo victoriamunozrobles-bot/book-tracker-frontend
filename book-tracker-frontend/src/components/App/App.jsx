@@ -12,6 +12,7 @@ import Navigation from "../Navigation/Navigation.jsx";
 import BookGallery from "../BookGallery/BookGallery.jsx";
 import Library from "../Library/Library.jsx";
 import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
+import EditName from "../form/EditName/EditName.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -30,6 +31,7 @@ function App() {
     !!localStorage.getItem("jwt"),
   );
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditNamePopupOpen, setIsEditNamePopupOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("mySavedBooks", JSON.stringify(savedBooks));
@@ -39,8 +41,13 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   };
 
+  const handleEditNameClick = () => {
+    setIsEditNamePopupOpen(true);
+  };
+
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
+    setIsEditNamePopupOpen(false);
   };
 
   useEffect(() => {
@@ -53,6 +60,14 @@ function App() {
     setCurrentUser((prevUser) => ({
       ...prevUser,
       avatar: newAvatarUrl,
+    }));
+    closeAllPopups();
+  };
+
+  const handleUpdateName = (newName) => {
+    setCurrentUser((prevUser) => ({
+      ...prevUser,
+      name: newName,
     }));
     closeAllPopups();
   };
@@ -145,6 +160,7 @@ function App() {
           setCurrentUser({
             ...userData,
             avatar: localUserData.avatar || userData.avatar || "",
+            name: localUserData.name || userData.name || "",
           });
         })
         .catch((err) => console.error(err));
@@ -165,6 +181,7 @@ function App() {
           userName={currentUser.name || "Lector"}
           userAvatar={currentUser.avatar}
           onEditAvatarClick={handleEditAvatarClick}
+          onEditNameClick={handleEditNameClick}
         />
 
         <main className="page__main-content">
@@ -229,6 +246,13 @@ function App() {
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
+          />
+        )}
+        {isEditNamePopupOpen && (
+          <EditName
+            isOpen={isEditNamePopupOpen}
+            onClose={closeAllPopups}
+            onUpdateName={handleUpdateName}
           />
         )}
       </div>

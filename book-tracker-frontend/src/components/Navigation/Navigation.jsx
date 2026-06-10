@@ -4,8 +4,9 @@ import logo from "../../images/logo.svg";
 export default function Navigation({
   loggedIn,
   userEmail,
-  userName = "Usuario",
+  userName,
   onEditAvatarClick,
+  onEditNameClick,
   userAvatar,
 }) {
   const defaultAvatar = `https://api.dicebear.com/9.x/pixel-art/svg?seed=${userName}`;
@@ -23,7 +24,9 @@ export default function Navigation({
           className="navigation__avatar"
           onClick={onEditAvatarClick}
         />
-        <h2 className="navigation__greeting">Hola, {userName}</h2>
+        <h2 className="navigation__greeting" onClick={onEditNameClick}>
+          Hola, {userName}
+        </h2>
       </div>
 
       {loggedIn && (
