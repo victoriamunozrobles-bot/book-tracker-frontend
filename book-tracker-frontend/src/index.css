@@ -1,5 +1,5 @@
 @import url("./components/App/App.css");
-@import url("./components/SideBar/sideBar.css");
+@import url("./components/Navigation/navigation.css");
 @import url("./components/Login/login.css");
 @import url("./components/Register/register.css");
 @import url("./components/BookSearch/bookSearch.css");
