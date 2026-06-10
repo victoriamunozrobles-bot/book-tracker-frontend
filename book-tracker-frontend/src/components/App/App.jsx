@@ -18,7 +18,10 @@ function App() {
   const [userEmail, setUserEmail] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = localStorage.getItem("currentUser");
+    return savedUser ? JSON.parse(savedUser) : {};
+  });
   const [savedBooks, setSavedBooks] = useState(() => {
     const localBooks = localStorage.getItem("mySavedBooks");
     return localBooks ? JSON.parse(localBooks) : [];
@@ -39,6 +42,12 @@ function App() {
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
   };
+
+  useEffect(() => {
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    }
+  }, [currentUser]);
 
   const handleUpdateAvatar = (newAvatarUrl) => {
     setCurrentUser((prevUser) => ({
@@ -129,11 +138,15 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       api
-
         .getUserInfo()
-
-        .then((userData) => setCurrentUser(userData))
-
+        .then((userData) => {
+          const savedUser = localStorage.getItem("currentUser");
+          const localUserData = savedUser ? JSON.parse(savedUser) : {};
+          setCurrentUser({
+            ...userData,
+            avatar: localUserData.avatar || userData.avatar || "",
+          });
+        })
         .catch((err) => console.error(err));
     }
   }, [loggedIn]);
