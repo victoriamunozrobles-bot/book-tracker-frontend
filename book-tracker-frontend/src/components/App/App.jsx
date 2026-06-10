@@ -8,7 +8,7 @@ import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
 import { searchBooks } from "../../utils/googleBooks.js";
-import SideBar from "../SideBar/SideBar.jsx";
+import Navigation from "../Navigation/Navigation.jsx";
 import BookGallery from "../BookGallery/BookGallery.jsx";
 import Library from "../Library/Library.jsx";
 import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
@@ -19,11 +19,18 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
-  const [savedBooks, setSavedBooks] = useState([]);
+  const [savedBooks, setSavedBooks] = useState(() => {
+    const localBooks = localStorage.getItem("mySavedBooks");
+    return localBooks ? JSON.parse(localBooks) : [];
+  });
   const [isCheckingToken, setIsCheckingToken] = useState(
     !!localStorage.getItem("jwt"),
   );
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("mySavedBooks", JSON.stringify(savedBooks));
+  }, [savedBooks]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -138,7 +145,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <SideBar
+        <Navigation
           classname="page__sideBar"
           loggedIn={loggedIn}
           userEmail={userEmail}
