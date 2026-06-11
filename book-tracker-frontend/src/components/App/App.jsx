@@ -4,12 +4,11 @@ import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import "../../index.css";
-import Header from "../Header/Header.jsx";
+import SideBar from "../SideBar/SideBar.jsx";
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
 import { searchBooks } from "../../utils/googleBooks.js";
-import Navigation from "../Navigation/Navigation.jsx";
 import BookGallery from "../BookGallery/BookGallery.jsx";
 import Library from "../Library/Library.jsx";
 import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
@@ -35,7 +34,15 @@ function App() {
   const [isEditNamePopupOpen, setIsEditNamePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
   useEffect(() => {
     localStorage.setItem("mySavedBooks", JSON.stringify(savedBooks));
   }, [savedBooks]);
@@ -182,18 +189,29 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header
-          className="page__header"
+        <div className="page-mobile__top-bar">
+          <button
+            className="page-mobile__hamburger"
+            onClick={toggleMenu}
+            aria-label="Abrir menú"
+          >
+            ☰
+          </button>
+        </div>
+
+        <SideBar
+          className="page__sidebar"
+          loggedIn={loggedIn}
+          userEmail={userEmail}
           userName={currentUser.name || "Lector"}
           userAvatar={currentUser.avatar}
           onEditAvatarClick={handleEditAvatarClick}
           onEditNameClick={handleEditNameClick}
+          isOpen={isMenuOpen}
+          onCloseMenu={closeMenu}
         />
-        <Navigation
-          classname="page__navigation"
-          loggedIn={loggedIn}
-          userEmail={userEmail}
-        />
+
+        {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
 
         <main className="page__main-content">
           <Routes>

@@ -1,10 +1,11 @@
 .header {
-  width: 120px;
+  width: 100%;
   background-color: #abc4ab;
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
   z-index: 10;
+  box-sizing: border-box;
 }
 
 .header__logo {
