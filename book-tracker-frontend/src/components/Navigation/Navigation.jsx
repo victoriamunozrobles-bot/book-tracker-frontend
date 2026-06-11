@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Navigation({ loggedIn, userEmail }) {
+export default function Navigation({ loggedIn }) {
   return (
     <aside className="navigation">
       {loggedIn && (
@@ -16,10 +16,6 @@ export default function Navigation({ loggedIn, userEmail }) {
               Mi perfil
             </Link>
           </nav>
-
-          <div className="navigation__footer">
-            <span className="navigation__email">{userEmail}</span>
-          </div>
         </>
       )}
     </aside>

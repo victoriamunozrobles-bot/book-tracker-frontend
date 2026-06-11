@@ -43,14 +43,3 @@
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0px #0a100d;
 }
-
-.navigation__footer {
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.navigation__email {
-  font-size: 0.9rem;
-  color: #555;
-  font-weight: 500;
-}
