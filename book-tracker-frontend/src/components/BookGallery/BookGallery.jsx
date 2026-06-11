@@ -2,9 +2,34 @@ import { useState } from "react";
 import BookCard from "../BookCard/BookCard.jsx";
 import "./BookGallery.css";
 
-export default function BookGallery({ searchResults, onSaveBook }) {
+export default function BookGallery({
+  searchResults,
+  onSaveBook,
+  isLoading,
+  hasSearched,
+}) {
   const [selectedBook, setSelectedBook] = useState(null);
 
+  if (isLoading) {
+    return (
+      <div className="book-gallery__message-container">
+        <div className="book-gallery__spinner"></div>
+        <p className="book-gallery__message gallery__message--pulsing">
+          Buscando el libro en los registros...
+        </p>
+      </div>
+    );
+  }
+
+  if (!isLoading && hasSearched && searchResults.length === 0) {
+    return (
+      <div className="book-gallery__message-container">
+        <p className="book-gallery__message gallery__message--pulsing">
+          El libro que buscas no se ha encontrado.
+        </p>
+      </div>
+    );
+  }
   return (
     <>
       <ul className="book-gallery__list">

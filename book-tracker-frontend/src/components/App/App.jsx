@@ -33,6 +33,8 @@ function App() {
   );
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditNamePopupOpen, setIsEditNamePopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("mySavedBooks", JSON.stringify(savedBooks));
@@ -139,6 +141,9 @@ function App() {
   };
 
   const handleSearch = (query) => {
+    setIsLoading(true);
+    setHasSearched(true);
+
     searchBooks(query)
       .then((results) => {
         setSearchResults(results);
@@ -146,8 +151,10 @@ function App() {
 
       .catch((err) => {
         console.error(err);
-
         setSearchResults([]);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -209,6 +216,8 @@ function App() {
                     <BookGallery
                       searchResults={searchResults}
                       onSaveBook={handleSaveBook}
+                      isLoading={isLoading}
+                      hasSearched={hasSearched}
                     />
                   </>
                 ) : (
