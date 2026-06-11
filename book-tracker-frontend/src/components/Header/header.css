@@ -1,0 +1,51 @@
+.header {
+  width: 120px;
+  background-color: #abc4ab;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.header__logo {
+  width: 100%;
+}
+
+.header__profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #fdfbf7;
+  border: 3px solid #0a100d;
+  box-shadow: 4px 4px 0px #0a100d;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.header__avatar:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #0a100d;
+}
+
+.header__avatar:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #0a100d;
+}
+
+.header__greeting {
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0a100d;
+  margin: 0;
+  line-height: 1.2;
+}

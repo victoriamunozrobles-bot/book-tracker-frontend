@@ -3,12 +3,17 @@
   width: 100vw;
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-areas: "sidebar mainContent";
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "header mainContent" "navigation mainContent";
   background-color: #abc4ab;
 }
 
-.page__sidebar {
-  grid-area: sidebar;
+.page__header {
+  grid-area: header;
+}
+
+.page__navigation {
+  grid-area: navigation;
 }
 
 .page__main-content {

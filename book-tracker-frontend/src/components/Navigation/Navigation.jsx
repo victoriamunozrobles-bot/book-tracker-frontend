@@ -1,34 +1,8 @@
 import { Link } from "react-router-dom";
-import logo from "../../images/logo.svg";
 
-export default function Navigation({
-  loggedIn,
-  userEmail,
-  userName,
-  onEditAvatarClick,
-  onEditNameClick,
-  userAvatar,
-}) {
-  const defaultAvatar = `https://api.dicebear.com/9.x/pixel-art/svg?seed=${userName}`;
-  const finalAvatarUrl = userAvatar ? userAvatar : defaultAvatar;
-
+export default function Navigation({ loggedIn, userEmail }) {
   return (
     <aside className="navigation">
-      <Link to="/" className="navigation__logo-link">
-        <img src={logo} alt="Logo" className="navigation__logo" />
-      </Link>
-      <div className="navigation__profile">
-        <img
-          src={finalAvatarUrl}
-          alt={`Avatar de ${userName}`}
-          className="navigation__avatar"
-          onClick={onEditAvatarClick}
-        />
-        <h2 className="navigation__greeting" onClick={onEditNameClick}>
-          Hola, {userName}
-        </h2>
-      </div>
-
       {loggedIn && (
         <>
           <nav className="navigation__nav">

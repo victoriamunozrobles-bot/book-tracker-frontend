@@ -4,6 +4,7 @@ import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import "../../index.css";
+import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
@@ -174,14 +175,17 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Navigation
-          classname="page__sideBar"
-          loggedIn={loggedIn}
-          userEmail={userEmail}
+        <Header
+          className="page__header"
           userName={currentUser.name || "Lector"}
           userAvatar={currentUser.avatar}
           onEditAvatarClick={handleEditAvatarClick}
           onEditNameClick={handleEditNameClick}
+        />
+        <Navigation
+          classname="page__navigation"
+          loggedIn={loggedIn}
+          userEmail={userEmail}
         />
 
         <main className="page__main-content">
