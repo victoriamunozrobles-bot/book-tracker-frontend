@@ -90,3 +90,10 @@
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0px #0a100d;
 }
+
+@media screen and (max-width: 500px) {
+  .name-modal__content {
+    width: 90%;
+    padding: 20px;
+  }
+}

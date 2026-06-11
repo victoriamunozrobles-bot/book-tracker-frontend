@@ -47,7 +47,6 @@
   box-shadow: 4px 4px 0px #0a100d;
 }
 
-/* 5. El botón de Guardar */
 .name-modal__save-button {
   padding: 12px;
   background-color: #abc4ab;
@@ -89,4 +88,11 @@
 .name-modal__close-button:active {
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0px #0a100d;
+}
+
+@media screen and (max-width: 500px) {
+  .name-modal__content {
+    width: 90%;
+    padding: 20px;
+  }
 }
