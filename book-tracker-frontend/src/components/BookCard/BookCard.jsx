@@ -13,7 +13,6 @@ export default function BookCard({ book, onCardClose, onSaveBook }) {
 
   return (
     <article className="book-card" onClick={(e) => e.stopPropagation()}>
-      <img className="book-card__image" src={coverImage} alt={title} />
       <button
         aria-label="Cerrar modal"
         className="book-card__close-button"
@@ -22,6 +21,8 @@ export default function BookCard({ book, onCardClose, onSaveBook }) {
       >
         X
       </button>
+      <img className="book-card__image" src={coverImage} alt={title} />
+
       <div className="book-card__content">
         <div className="book-card__header">
           <h2 className="book-card__title">{title}</h2>
