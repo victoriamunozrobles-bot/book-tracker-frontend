@@ -13,4 +13,6 @@ body {
   padding: 0;
   box-sizing: border-box;
   width: 100%;
+  min-height: 100vh;
+  background-color: #abc4ab;
 }
