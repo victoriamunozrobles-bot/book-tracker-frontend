@@ -9,9 +9,6 @@ export default function Navigation() {
       <Link to="/search" className="navigation__link">
         Buscar Libros
       </Link>
-      <Link to="/profile" className="navigation__link">
-        Mi perfil
-      </Link>
     </nav>
   );
 }

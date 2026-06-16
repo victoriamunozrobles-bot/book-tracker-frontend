@@ -8,7 +8,7 @@ import SideBar from "../SideBar/SideBar.jsx";
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
-import { searchBooks } from "../../utils/googleBooks.js";
+import { searchBooks } from "../../utils/ThirdPartyApi.js";
 import BookGallery from "../BookGallery/BookGallery.jsx";
 import Library from "../Library/Library.jsx";
 import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";

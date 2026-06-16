@@ -5,6 +5,7 @@
   grid-template-columns: 200px 1fr;
   grid-template-areas: "sideBar mainContent";
   background-color: #abc4ab;
+  box-sizing: border-box;
 }
 
 .page-mobile__top-bar {
@@ -44,16 +45,17 @@
       "mainContent";
     box-sizing: border-box;
   }
+
   .page-mobile__top-bar {
     display: flex;
     align-items: center;
     background-color: #abc4ab;
     grid-area: header;
-    box-sizing: border-box;
     padding: 0 20px;
+    box-sizing: border-box;
   }
 
-  .page__navigation {
+  .page__sidebar {
     position: fixed;
     top: 0;
     left: 0;
@@ -66,14 +68,24 @@
     transition: transform 0.3s ease-in-out;
   }
 
-  .page__navigation--open {
-    transform: translateX(0);
+  .sidebar--open {
+    transform: translateX(0) !important;
   }
 
   .page__main-content {
+    grid-area: mainContent;
     min-width: 0;
-    margin: 15;
+    margin: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .page__main-content {
+    margin: 12px;
     padding: 15px;
+    min-width: 0;
     box-sizing: border-box;
   }
 }
