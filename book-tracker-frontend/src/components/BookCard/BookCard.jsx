@@ -1,7 +1,14 @@
 import exampleImg from "../../images/example.webp";
 import add from "../../images/add-icon.svg";
 
-export default function BookCard({ book, onCardClose, onSaveBook }) {
+export default function BookCard({
+  book,
+  onCardClose,
+  onSaveBook,
+  onRemoveBook,
+  onNotesClick,
+  inLibrary = false,
+}) {
   const info = book.volumeInfo;
 
   const title = info.title || "Título desconocido";
@@ -38,17 +45,36 @@ export default function BookCard({ book, onCardClose, onSaveBook }) {
           <li className="book-card__tag">{genre}</li>
         </ul>
 
-        <button
-          className="book-card__add-button"
-          type="button"
-          onClick={() => onSaveBook(book)}
-        >
-          <img
-            className="book-card__add-icon"
-            src={add}
-            alt="Botón para agregar a biblioteca."
-          />
-        </button>
+        {inLibrary ? (
+          <div className="book-card__library-actions">
+            <button
+              className="book-card__action-btn book-card__action-btn--notes"
+              type="button"
+              onClick={() => onNotesClick(book)}
+            >
+              📝 Añadir nota
+            </button>
+            <button
+              className="book-card__action-btn book-card__action-btn--remove"
+              type="button"
+              onClick={() => onRemoveBook(book)}
+            >
+              🗑️ Quitar
+            </button>
+          </div>
+        ) : (
+          <button
+            className="book-card__add-button"
+            type="button"
+            onClick={() => onSaveBook(book)}
+          >
+            <img
+              className="book-card__add-icon"
+              src={add}
+              alt="Botón para agregar a biblioteca."
+            />
+          </button>
+        )}
       </div>
     </article>
   );

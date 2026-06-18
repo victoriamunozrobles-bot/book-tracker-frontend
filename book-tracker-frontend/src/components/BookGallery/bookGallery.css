@@ -127,7 +127,7 @@
 
 @media screen and (max-width: 500px) {
   .book-gallery__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 12px;
     box-sizing: border-box;
   }

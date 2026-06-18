@@ -219,7 +219,10 @@ function App() {
               path="/"
               element={
                 loggedIn ? (
-                  <Library savedBooks={savedBooks} />
+                  <Library
+                    savedBooks={savedBooks}
+                    setSavedBooks={setSavedBooks}
+                  />
                 ) : (
                   <Navigate to="/signin" replace />
                 )
