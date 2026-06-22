@@ -29,10 +29,7 @@ function App() {
     const savedUser = localStorage.getItem("currentUser");
     return savedUser ? JSON.parse(savedUser) : {};
   });
-  const [savedBooks, setSavedBooks] = useState(() => {
-    const localBooks = localStorage.getItem("mySavedBooks");
-    return localBooks ? JSON.parse(localBooks) : [];
-  });
+  const [savedBooks, setSavedBooks] = useState([]);
   const [isCheckingToken, setIsCheckingToken] = useState(
     !!localStorage.getItem("jwt"),
   );
@@ -41,6 +38,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const loadUserBooks = (email) => {
+    const localBooks = localStorage.getItem(`mySavedBooks_${email}`);
+    setSavedBooks(localBooks ? JSON.parse(localBooks) : []);
+  };
 
   const location = useLocation();
   const isAuthRoute =
@@ -53,9 +55,15 @@ function App() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
   useEffect(() => {
-    localStorage.setItem("mySavedBooks", JSON.stringify(savedBooks));
-  }, [savedBooks]);
+    if (userEmail) {
+      localStorage.setItem(
+        `mySavedBooks_${userEmail}`,
+        JSON.stringify(savedBooks),
+      );
+    }
+  }, [savedBooks, userEmail]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -129,10 +137,9 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
-
           setLoggedIn(true);
-
           setUserEmail(email);
+          loadUserBooks(userEmail);
 
           navigate("/");
         }
