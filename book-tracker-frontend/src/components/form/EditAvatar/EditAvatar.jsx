@@ -1,31 +1,34 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./EditAvatar.css";
 
 export default function EditAvatar({ isOpen, onClose, onUpdateAvatar }) {
   const [avatarUrl, setAvatarUrl] = useState("");
 
-  useEffect(() => {
-    if (isOpen) {
-      setAvatarUrl("");
-    }
-  }, [isOpen]);
+  const handleClose = () => {
+    setAvatarUrl("");
+    onClose();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateAvatar(avatarUrl);
+    onUpdateAvatar({
+      avatar: avatarUrl,
+    });
+    setAvatarUrl("");
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="avatar-modal" onClick={onClose}>
+    <div className="avatar-modal" onClick={handleClose}>
       <div
         className="avatar-modal__content"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           className="avatar-modal__close-button"
-          onClick={onClose}
+          onClick={handleClose}
           type="button"
         >
           X

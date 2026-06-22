@@ -1,28 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./editName.css";
 
 export default function EditName({ isOpen, onClose, onUpdateName }) {
   const [name, setName] = useState("");
 
-  useEffect(() => {
-    if (isOpen) {
-      setName("");
-    }
-  }, [isOpen]);
+  const handleClose = () => {
+    setName("");
+    onClose();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateName(name);
+    onUpdateName({
+      name: name,
+    });
+    setName("");
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="name-modal" onClick={onClose}>
+    <div className="name-modal" onClick={handleClose}>
       <div className="name-modal__content" onClick={(e) => e.stopPropagation()}>
         <button
           className="name-modal__close-button"
-          onClick={onClose}
+          onClick={handleClose}
           type="button"
         >
           X
