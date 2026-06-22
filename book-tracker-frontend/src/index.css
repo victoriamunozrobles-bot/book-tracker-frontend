@@ -8,6 +8,7 @@
 @import url("./components/BookGallery/bookGallery.css");
 @import url("./components/form/EditAvatar/editAvatar.css");
 @import url("./components/Library/library.css");
+@import url("./components/Footer/footer.css");
 
 body {
   margin: 0;

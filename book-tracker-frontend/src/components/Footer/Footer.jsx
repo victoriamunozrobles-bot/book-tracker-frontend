@@ -1,5 +1,3 @@
-import "./footer.css";
-
 export default function Footer({ userEmail }) {
   return (
     <div className="footer">
