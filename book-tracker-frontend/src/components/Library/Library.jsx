@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BookCard from "../BookCard/BookCard.jsx";
+import NoteModal from "../NoteModal/NoteModal.jsx";
 
 export default function Library({ savedBooks, setSavedBooks }) {
   const [selectedBookForNotes, setSelectedBookForNotes] = useState(null);
@@ -19,6 +20,24 @@ export default function Library({ savedBooks, setSavedBooks }) {
 
   const handleCloseNotes = () => {
     setSelectedBookForNotes(null);
+  };
+
+  const handleSaveNote = (bookToUpdate, newNoteText) => {
+    if (!newNoteText.trim()) return;
+
+    const updatedBooks = savedBooks.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        const currentNotes = book.notes || [];
+
+        return {
+          ...book,
+          notes: [...currentNotes, newNoteText],
+        };
+      }
+      return book;
+    });
+
+    setSavedBooks(updatedBooks);
   };
 
   return (
@@ -74,13 +93,11 @@ export default function Library({ savedBooks, setSavedBooks }) {
       )}
 
       {selectedBookForNotes && (
-        <div className="notes-modal-overlay">
-          <div className="notes-modal-content">
-            <h2>Notas para: {selectedBookForNotes.volumeInfo?.title}</h2>
-            <textarea placeholder="Escribe tus notas aquí..."></textarea>
-            <button onClick={handleCloseNotes}>Cerrar</button>
-          </div>
-        </div>
+        <NoteModal
+          book={selectedBookForNotes}
+          onClose={handleCloseNotes}
+          onSaveNote={handleSaveNote}
+        />
       )}
     </section>
   );

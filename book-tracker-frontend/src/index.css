@@ -9,6 +9,7 @@
 @import url("./components/form/EditAvatar/editAvatar.css");
 @import url("./components/Library/library.css");
 @import url("./components/Footer/footer.css");
+@import url("./components/NoteModal/noteModal.css");
 
 body {
   margin: 0;

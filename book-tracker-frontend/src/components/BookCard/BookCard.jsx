@@ -18,6 +18,8 @@ export default function BookCard({
   const genre = info.categories ? info.categories[0] : "General";
   const coverImage = info.imageLinks?.thumbnail || exampleImg;
 
+  const savedNotes = book.notes || [];
+
   return (
     <article className="book-card" onClick={(e) => e.stopPropagation()}>
       <button
@@ -44,6 +46,19 @@ export default function BookCard({
           <li className="book-card__tag">{pages} págs</li>
           <li className="book-card__tag">{genre}</li>
         </ul>
+
+        {inLibrary && savedNotes.length > 0 && (
+          <div className="book-card__notes-container">
+            <h4 className="book-card__notes-heading">Mis apuntes:</h4>
+            <ul className="book-card__notes-history">
+              {savedNotes.map((note, index) => (
+                <li key={index} className="book-card__note-bubble">
+                  {note}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {inLibrary ? (
           <div className="book-card__library-actions">
