@@ -9,6 +9,24 @@
   padding-bottom: 20px;
 }
 
+.page--auth {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.page.page--auth .page__main-content {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #f5f0e1;
+}
+
 .page-mobile__top-bar {
   display: none;
 }

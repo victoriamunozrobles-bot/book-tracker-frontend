@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import * as auth from "../../utils/auth.js";
 import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import "../../index.css";
 import SideBar from "../SideBar/SideBar.jsx";
 import Login from "../Login/Login.jsx";
@@ -35,6 +41,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const location = useLocation();
+  const isAuthRoute =
+    location.pathname === "/signin" || location.pathname === "/signup";
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -188,30 +198,34 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
-        <div className="page-mobile__top-bar">
-          <button
-            className="page-mobile__hamburger"
-            onClick={toggleMenu}
-            aria-label="Abrir menú"
-          >
-            ☰
-          </button>
-        </div>
+      <div className={`page ${isAuthRoute ? "page--auth" : ""}`}>
+        {!isAuthRoute && (
+          <>
+            <div className="page-mobile__top-bar">
+              <button
+                className="page-mobile__hamburger"
+                onClick={toggleMenu}
+                aria-label="Abrir menú"
+              >
+                ☰
+              </button>
+            </div>
 
-        <SideBar
-          className="page__sidebar"
-          loggedIn={loggedIn}
-          userEmail={userEmail}
-          userName={currentUser.name || "Lector"}
-          userAvatar={currentUser.avatar}
-          onEditAvatarClick={handleEditAvatarClick}
-          onEditNameClick={handleEditNameClick}
-          isOpen={isMenuOpen}
-          onCloseMenu={closeMenu}
-        />
+            <SideBar
+              className="page__sidebar"
+              loggedIn={loggedIn}
+              userEmail={userEmail}
+              userName={currentUser.name || "Lector"}
+              userAvatar={currentUser.avatar}
+              onEditAvatarClick={handleEditAvatarClick}
+              onEditNameClick={handleEditNameClick}
+              isOpen={isMenuOpen}
+              onCloseMenu={closeMenu}
+            />
 
-        {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
+            {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
+          </>
+        )}
 
         <main className="page__main-content">
           <Routes>
@@ -275,6 +289,7 @@ function App() {
             />
           </Routes>
         </main>
+
         {isEditAvatarPopupOpen && (
           <EditAvatar
             isOpen={isEditAvatarPopupOpen}
@@ -282,6 +297,7 @@ function App() {
             onUpdateAvatar={handleUpdateAvatar}
           />
         )}
+
         {isEditNamePopupOpen && (
           <EditName
             isOpen={isEditNamePopupOpen}
@@ -293,5 +309,4 @@ function App() {
     </CurrentUserContext.Provider>
   );
 }
-
 export default App;
