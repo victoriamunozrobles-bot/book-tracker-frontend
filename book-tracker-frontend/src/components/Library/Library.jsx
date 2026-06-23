@@ -40,6 +40,31 @@ export default function Library({ savedBooks, setSavedBooks }) {
     setSavedBooks(updatedBooks);
   };
 
+  const handleDeleteNote = (bookToUpdate, noteIndex) => {
+    const updatedBooks = savedBooks.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        const newNotes = book.notes.filter((_, i) => i !== noteIndex);
+        return { ...book, notes: newNotes };
+      }
+      return book;
+    });
+    setSavedBooks(updatedBooks);
+  };
+
+  const handleEditNote = (bookToUpdate, noteIndex, editedText) => {
+    if (!editedText.trim()) return;
+
+    const updatedBooks = savedBooks.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        const newNotes = [...book.notes];
+        newNotes[noteIndex] = editedText;
+        return { ...book, notes: newNotes };
+      }
+      return book;
+    });
+    setSavedBooks(updatedBooks);
+  };
+
   return (
     <section className="library">
       <header className="library__header">
@@ -83,11 +108,16 @@ export default function Library({ savedBooks, setSavedBooks }) {
         <div className="book-modal">
           {" "}
           <BookCard
-            book={selectedBookForDetails}
+            book={
+              savedBooks.find((b) => b.id === selectedBookForDetails.id) ||
+              selectedBookForDetails
+            }
             inLibrary={true}
             onCardClose={() => setSelectedBookForDetails(null)}
             onRemoveBook={handleRemoveBook}
             onNotesClick={handleOpenNotes}
+            onDeleteNote={handleDeleteNote}
+            onEditNote={handleEditNote}
           />
         </div>
       )}

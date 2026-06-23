@@ -1,5 +1,6 @@
 import exampleImg from "../../images/example.webp";
 import add from "../../images/add-icon.svg";
+import { useState } from "react";
 
 export default function BookCard({
   book,
@@ -7,6 +8,8 @@ export default function BookCard({
   onSaveBook,
   onRemoveBook,
   onNotesClick,
+  onDeleteNote,
+  onEditNote,
   inLibrary = false,
 }) {
   const info = book.volumeInfo;
@@ -20,6 +23,22 @@ export default function BookCard({
 
   const savedNotes = book.notes || [];
 
+  const [editingNoteIndex, setEditingNoteIndex] = useState(null);
+  const [editNoteText, setEditNoteText] = useState("");
+  const startEditing = (index, currentText) => {
+    setEditingNoteIndex(index);
+    setEditNoteText(currentText);
+  };
+
+  const cancelEditing = () => {
+    setEditingNoteIndex(null);
+    setEditNoteText("");
+  };
+
+  const saveEdit = (index) => {
+    onEditNote(book, index, editNoteText);
+    setEditingNoteIndex(null);
+  };
   return (
     <article className="book-card" onClick={(e) => e.stopPropagation()}>
       <button
@@ -53,7 +72,51 @@ export default function BookCard({
             <ul className="book-card__notes-history">
               {savedNotes.map((note, index) => (
                 <li key={index} className="book-card__note-bubble">
-                  {note}
+                  {editingNoteIndex === index ? (
+                    <div className="book-card__note-edit-mode">
+                      <input
+                        type="text"
+                        value={editNoteText}
+                        onChange={(e) => setEditNoteText(e.target.value)}
+                        className="book-card__note-edit-input"
+                        autoFocus
+                      />
+                      <div className="book-card__note-edit-actions">
+                        <button type="button" onClick={() => saveEdit(index)}>
+                          💾
+                        </button>
+                        <button type="button" onClick={cancelEditing}>
+                          ❌
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="book-card__note-read-mode">
+                      <span className="book-card__note-text">{note}</span>
+                      <div className="book-card__note-actions">
+                        <button
+                          type="button"
+                          className="book-card__icon-btn"
+                          onClick={() =>
+                            onEditNote && startEditing(index, note)
+                          }
+                          title="Editar nota"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          type="button"
+                          className="book-card__icon-btn"
+                          onClick={() =>
+                            onDeleteNote && onDeleteNote(book, index)
+                          }
+                          title="Eliminar nota"
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

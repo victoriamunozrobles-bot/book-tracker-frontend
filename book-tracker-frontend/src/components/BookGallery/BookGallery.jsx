@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BookCard from "../BookCard/BookCard.jsx";
 import "./BookGallery.css";
+import bookCover from "../../images/book-cover.svg";
 
 export default function BookGallery({
   searchResults,
@@ -34,9 +35,9 @@ export default function BookGallery({
     <>
       <ul className="book-gallery__list">
         {searchResults.map((book) => {
-          const coverImage =
-            book.volumeInfo?.imageLinks?.thumbnail ||
-            "https://via.placeholder.com/150x200?text=Sin+Portada";
+          const coverImage = book.volumeInfo?.imageLinks?.thumbnail || (
+            <img src={bookCover} alt={book.volumeInfo.title} />
+          );
           const title = book.volumeInfo?.title || "Sin título";
 
           return (

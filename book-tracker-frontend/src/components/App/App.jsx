@@ -38,10 +38,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBooksLoaded, setIsBooksLoaded] = useState(false);
 
   const loadUserBooks = (email) => {
     const localBooks = localStorage.getItem(`mySavedBooks_${email}`);
     setSavedBooks(localBooks ? JSON.parse(localBooks) : []);
+    setIsBooksLoaded(true);
   };
 
   const location = useLocation();
@@ -57,13 +59,13 @@ function App() {
   };
 
   useEffect(() => {
-    if (userEmail) {
+    if (loggedIn && userEmail && isBooksLoaded) {
       localStorage.setItem(
         `mySavedBooks_${userEmail}`,
         JSON.stringify(savedBooks),
       );
     }
-  }, [savedBooks, userEmail]);
+  }, [savedBooks, userEmail, loggedIn, isBooksLoaded]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);

@@ -88,6 +88,67 @@
   gap: 8px;
 }
 
+.book-card__note-read-mode {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.book-card__note-text {
+  flex: 1;
+}
+
+.book-card__note-actions {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.book-card__icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.book-card__icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.book-card__note-edit-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.book-card__note-edit-input {
+  width: 100%;
+  padding: 6px;
+  border: 2px solid #0a100d;
+  border-radius: 4px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.book-card__note-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.book-card__note-edit-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
 .book-card__notes-heading {
   margin: 0;
   font-family: monospace;
