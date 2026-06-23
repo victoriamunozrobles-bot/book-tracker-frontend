@@ -35,7 +35,7 @@ export const authorize = async (email, password) => {
   );
 
   if (validUser) {
-    return { token: "token-simulado-mockapi-" + validUser.id };
+    return { token: `token-simulado-${validUser.email}` };
   } else {
     alert("Correo o contraseña incorrectos.");
     return Promise.reject("Credenciales inválidas");
@@ -43,8 +43,9 @@ export const authorize = async (email, password) => {
 };
 
 export const checkToken = async (token) => {
-  if (token && token.startsWith("token-simulado-mockapi-")) {
-    return { data: { email: "usuario@mockapi.com" } };
+  if (token && token.startsWith("token-simulado-")) {
+    const userEmail = token.replace("token-simulado-", "");
+    return { data: { email: userEmail } };
   }
   return Promise.reject("Token inválido");
 };

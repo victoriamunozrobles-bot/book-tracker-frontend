@@ -41,6 +41,7 @@ function App() {
   const [isBooksLoaded, setIsBooksLoaded] = useState(false);
 
   const loadUserBooks = (email) => {
+    console.log("1. LEYENDO de localStorage para:", email);
     const localBooks = localStorage.getItem(`mySavedBooks_${email}`);
     setSavedBooks(localBooks ? JSON.parse(localBooks) : []);
     setIsBooksLoaded(true);
@@ -112,6 +113,7 @@ function App() {
           if (res) {
             setLoggedIn(true);
             setUserEmail(res.data.email);
+            loadUserBooks(res.data.email);
           }
         })
         .catch((err) => console.error(err))
