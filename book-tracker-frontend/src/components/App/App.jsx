@@ -169,6 +169,17 @@ function App() {
       });
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("currentUser");
+
+    setLoggedIn(false);
+    setCurrentUser({});
+    setUserEmail("");
+
+    navigate("/signin");
+  };
+
   const handleSearch = (query) => {
     setIsLoading(true);
     setHasSearched(true);
@@ -233,6 +244,7 @@ function App() {
               onEditNameClick={handleEditNameClick}
               isOpen={isMenuOpen}
               onCloseMenu={closeMenu}
+              onSignOut={handleSignOut}
             />
 
             {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
