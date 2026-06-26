@@ -19,6 +19,7 @@ import BookGallery from "../BookGallery/BookGallery.jsx";
 import Library from "../Library/Library.jsx";
 import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
 import EditName from "../form/EditName/EditName.jsx";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -243,20 +244,18 @@ function App() {
             <Route
               path="/"
               element={
-                loggedIn ? (
+                <ProtectedRoute loggedIn={loggedIn}>
                   <Library
                     savedBooks={savedBooks}
                     setSavedBooks={setSavedBooks}
                   />
-                ) : (
-                  <Navigate to="/signin" replace />
-                )
+                </ProtectedRoute>
               }
             />
             <Route
               path="/search"
               element={
-                loggedIn ? (
+                <ProtectedRoute loggedIn={loggedIn}>
                   <>
                     <BookSearch onSearch={handleSearch} />
                     <BookGallery
@@ -266,9 +265,7 @@ function App() {
                       hasSearched={hasSearched}
                     />
                   </>
-                ) : (
-                  <Navigate to="/signin" replace />
-                )
+                </ProtectedRoute>
               }
             />
 
