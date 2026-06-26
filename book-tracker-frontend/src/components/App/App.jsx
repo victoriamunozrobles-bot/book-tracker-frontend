@@ -88,19 +88,23 @@ function App() {
     }
   }, [currentUser]);
 
-  const handleUpdateAvatar = (newAvatarUrl) => {
+  const handleUpdateAvatar = (data) => {
+    const avatarString = typeof data === "object" ? data.avatar : data;
+
     setCurrentUser((prevUser) => ({
       ...prevUser,
-      avatar: newAvatarUrl,
+      avatar: avatarString,
     }));
     closeAllPopups();
   };
 
-  const handleUpdateName = (newName) => {
+  const handleUpdateName = (data) => {
+    const nameString = typeof data === "object" ? data.name : data;
     setCurrentUser((prevUser) => ({
       ...prevUser,
-      name: newName,
+      name: nameString,
     }));
+
     closeAllPopups();
   };
 
