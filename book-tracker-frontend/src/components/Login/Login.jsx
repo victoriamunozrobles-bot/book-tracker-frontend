@@ -10,7 +10,8 @@ export default function Login({ handleLogin }) {
     e.preventDefault();
     if (!isValid) return;
 
-    handleLogin(values.email, values.password).catch(() => {
+    handleLogin(values.email, values.password).catch((err) => {
+      console.error("Detalle técnico del error:", err);
       setApiError("Correo o contraseña incorrectos.");
     });
   };

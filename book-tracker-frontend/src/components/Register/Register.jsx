@@ -14,7 +14,8 @@ export default function Register({ handleRegister }) {
     }
 
     setApiError("");
-    handleRegister(values.name, values.email, values.password).catch(() => {
+    handleRegister(values.name, values.email, values.password).catch((err) => {
+      console.error("Detalle técnico del error:", err);
       setApiError("Hubo un error al registrar el usuario.");
     });
   };
