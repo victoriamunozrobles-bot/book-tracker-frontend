@@ -36,34 +36,3 @@
     align-self: flex-end;
   }
 }
-
-.sidebar__logout-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: transparent;
-  border: none;
-  color: #000000;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 10px 0;
-  margin-top: 20px;
-  transition:
-    color 0.2s ease,
-    transform 0.1s ease;
-}
-
-.sidebar__logout-icon {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.sidebar__logout-button:hover {
-  color: #d9534f;
-  transform: translateX(5px);
-}

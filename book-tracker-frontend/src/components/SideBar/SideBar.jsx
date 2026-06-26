@@ -1,7 +1,6 @@
 import Header from "../Header/Header.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
 import Footer from "../Footer/Footer.jsx";
-import signOutIcon from "../../images/sign-out-icon.svg";
 
 import "./sideBar.css";
 
@@ -23,6 +22,8 @@ export default function SideBar({
         X
       </button>
       <Header
+        loggedIn={loggedIn}
+        onSignOut={onSignOut}
         userName={userName}
         userAvatar={userAvatar}
         onEditAvatarClick={onEditAvatarClick}
@@ -33,20 +34,6 @@ export default function SideBar({
         <>
           <Navigation onCloseMenu={onCloseMenu} />
           <Footer userEmail={userEmail} />
-          <button
-            className="sidebar__logout-button"
-            onClick={() => {
-              onSignOut();
-              onCloseMenu();
-            }}
-          >
-            <img
-              className="sidebar__logout-icon"
-              src={signOutIcon}
-              alt="Cerrar sesión"
-            />
-            Cerrar sesión
-          </button>
         </>
       )}
     </aside>
