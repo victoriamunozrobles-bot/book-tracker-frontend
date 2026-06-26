@@ -1,50 +1,60 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useFormAndValidation } from "../../utils/useFormAndValidation";
 
 export default function Login({ handleLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange, errors, isValid } = useFormAndValidation();
+  const [apiError, setApiError] = useState("");
 
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      return;
-    }
-    handleLogin(email, password);
-    handleLogin(email, password);
+    if (!isValid) return;
+
+    handleLogin(values.email, values.password).catch((err) => {
+      setApiError("Correo o contraseña incorrectos.");
+    });
   };
 
   return (
     <div className="login">
       <h2 className="login__title">Inicia sesión</h2>
-      <form className={"login__form"} onSubmit={handleSubmit}>
+      <form className="login__form" onSubmit={handleSubmit} noValidate>
         <input
           className="login_form__input"
           type="email"
+          name="email"
           placeholder="Correo electrónico"
-          value={email}
-          onChange={handleChangeEmail}
+          value={values.email || ""}
+          onChange={handleChange}
           required
         />
+        <span className="login__error">{errors.email}</span>
+
         <input
           className="login_form__input"
           type="password"
+          name="password"
           placeholder="Contraseña"
-          value={password}
-          onChange={handleChangePassword}
+          value={values.password || ""}
+          onChange={handleChange}
           required
+          minLength="8"
         />
-        <button className="login_form__button" type="submit">
+        <span className="login__error">{errors.password}</span>
+
+        {apiError && (
+          <span className="login__error login__error_api">{apiError}</span>
+        )}
+
+        <button
+          className={`login_form__button ${!isValid ? "login_form__button_disabled" : ""}`}
+          type="submit"
+          disabled={!isValid}
+        >
           Inicia sesión
         </button>
       </form>
+
       <div className="login__signup">
         <Link className="login__signup_link" to="/signup">
           ¿Aún no eres miembro? Regístrate aquí
