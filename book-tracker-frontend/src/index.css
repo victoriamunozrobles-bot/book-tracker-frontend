@@ -10,6 +10,7 @@
 @import url("./components/Library/library.css");
 @import url("./components/Footer/footer.css");
 @import url("./components/NoteModal/noteModal.css");
+@import url("./components/About/about.css");
 
 body {
   margin: 0;

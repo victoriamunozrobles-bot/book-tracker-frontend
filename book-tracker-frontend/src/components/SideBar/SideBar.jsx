@@ -15,6 +15,7 @@ export default function SideBar({
   isOpen,
   onCloseMenu,
   onSignOut,
+  onAboutClick,
 }) {
   return (
     <aside className={`${className} sidebar ${isOpen ? "sidebar--open" : ""}`}>
@@ -33,6 +34,9 @@ export default function SideBar({
       {loggedIn && (
         <>
           <Navigation onCloseMenu={onCloseMenu} />
+          <button className="sidebar__about-link" onClick={onAboutClick}>
+            ¿Quién creó Book Tracker?
+          </button>
           <Footer userEmail={userEmail} />
         </>
       )}

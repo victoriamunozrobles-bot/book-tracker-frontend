@@ -20,6 +20,7 @@ import Library from "../Library/Library.jsx";
 import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
 import EditName from "../form/EditName/EditName.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
+import About from "../About/About.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -40,6 +41,7 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isBooksLoaded, setIsBooksLoaded] = useState(false);
+  const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
 
   const loadUserBooks = (email) => {
     console.log("1. LEYENDO de localStorage para:", email);
@@ -77,9 +79,14 @@ function App() {
     setIsEditNamePopupOpen(true);
   };
 
+  const handleAboutClick = () => {
+    setIsAboutPopupOpen(true);
+  };
+
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditNamePopupOpen(false);
+    setIsAboutPopupOpen(false);
   };
 
   useEffect(() => {
@@ -249,6 +256,7 @@ function App() {
               isOpen={isMenuOpen}
               onCloseMenu={closeMenu}
               onSignOut={handleSignOut}
+              onAboutClick={handleAboutClick}
             />
 
             {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
@@ -328,6 +336,10 @@ function App() {
             onClose={closeAllPopups}
             onUpdateName={handleUpdateName}
           />
+        )}
+
+        {isAboutPopupOpen && (
+          <About isOpen={isAboutPopupOpen} onClose={closeAllPopups} />
         )}
       </div>
     </CurrentUserContext.Provider>
