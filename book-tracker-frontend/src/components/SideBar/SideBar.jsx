@@ -34,10 +34,13 @@ export default function SideBar({
       {loggedIn && (
         <>
           <Navigation onCloseMenu={onCloseMenu} />
-          <button className="sidebar__about-link" onClick={onAboutClick}>
-            ¿Quién creó Book Tracker?
-          </button>
-          <Footer userEmail={userEmail} />
+          <div className="sidebar__bottom-section">
+            <button className="sidebar__about-link" onClick={onAboutClick}>
+              ¿Quién creó Book Tracker?
+            </button>
+
+            <Footer userEmail={userEmail} />
+          </div>
         </>
       )}
     </aside>

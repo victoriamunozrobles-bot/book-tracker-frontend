@@ -36,3 +36,10 @@
     align-self: flex-end;
   }
 }
+
+.sidebar__bottom-section {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
