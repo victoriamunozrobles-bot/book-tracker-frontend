@@ -1,82 +1,128 @@
 .register {
-  background-color: white;
-  border-radius: 30px;
-  min-width: 350px;
-  padding: 5%;
-}
-
-.register__form {
-  margin: 60px auto;
-  color: rgb(0, 0, 0);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 358px;
+  margin: 0 auto;
+  padding-top: 60px;
 }
 
 .register__title {
-  font-size: 24px;
-  font-weight: 900;
   font-family: "Inter", Arial, sans-serif;
-  margin-bottom: 50px;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.2;
   color: #000000;
-  text-align: center;
+  margin: 0 0 50px 0;
+  align-self: flex-start;
 }
 
 .register__form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  width: 100%;
 }
 
 .register_form__input {
-  border: 2px solid #cccccc;
+  width: 100%;
+  border: none;
   border-bottom: 2px solid #cccccc;
-  border-radius: 30px;
-  color: rgb(0, 0, 0);
-  padding: 7px;
-  font-size: 14px;
+  background-color: transparent;
+  color: #000000;
   font-family: "Inter", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  padding-bottom: 13px;
+  margin-bottom: 10px;
   outline: none;
+  transition: border-bottom-color 0.3s;
 }
 
-.register_form__input::placeholder {
-  color: #cccccc;
+.register_form__input:focus {
+  border-bottom-color: #000000;
+}
+
+.register__error {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 12px;
+  color: #ff0000;
+  min-height: 20px;
+  margin-bottom: 12px;
+}
+
+.register__error_api {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .form__actions {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
-  margin-top: 20px;
+  margin-top: 40px;
+  width: 100%;
 }
 
 .register_form__button {
-  background-color: white;
-  color: black;
-  border: 2px solid #2f71e5;
-  border-radius: 100px;
-  padding: 10px 30px;
-  font-size: 16px;
-  font-weight: 500;
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 2px;
   font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  padding: 14px 0;
   cursor: pointer;
+  transition: opacity 0.3s;
+  margin-bottom: 15px;
 }
 
-.register_form__button :hover {
+.register_form__button:hover {
   opacity: 0.8;
 }
 
+.register_form__button_disabled {
+  background-color: transparent;
+  color: #a9a9a9;
+  border: 1px solid #a9a9a9;
+  cursor: default;
+}
+
+.register_form__button_disabled:hover {
+  opacity: 1;
+}
+
 .register__signup {
-  font-family: "Inter", Arial, sans-serif;
   text-align: center;
 }
 
 .register__signup_link {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 14px;
+  line-height: 1.2;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 0.3s;
 }
 
 .register__signup_link:hover {
   opacity: 0.6;
+}
+
+@media screen and (max-width: 600px) {
+  .register {
+    max-width: 260px;
+    padding-top: 40px;
+  }
+
+  .register__title {
+    font-size: 20px;
+    text-align: center;
+    align-self: center;
+    margin-bottom: 40px;
+  }
 }
