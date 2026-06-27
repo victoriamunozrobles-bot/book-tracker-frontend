@@ -21,6 +21,7 @@ import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
 import EditName from "../form/EditName/EditName.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import About from "../About/About.jsx";
+import InfoTooltip from "../InfoTooltip/InfoTooltip.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -42,6 +43,8 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isBooksLoaded, setIsBooksLoaded] = useState(false);
   const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
 
   const loadUserBooks = (email) => {
     console.log("1. LEYENDO de localStorage para:", email);
@@ -87,6 +90,10 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditNamePopupOpen(false);
     setIsAboutPopupOpen(false);
+    if (isRegistrationSuccess) {
+      navigate("/signin");
+      setIsRegistrationSuccess(false);
+    }
   };
 
   useEffect(() => {
@@ -172,11 +179,14 @@ function App() {
       .register(name, email, password)
 
       .then(() => {
-        navigate("/signin");
+        setIsRegistrationSuccess(true);
+        setIsInfoTooltipOpen(true);
       })
 
       .catch((err) => {
         console.error(err);
+        setIsRegistrationSuccess(false);
+        setIsInfoTooltipOpen(true);
       });
   };
 
@@ -341,6 +351,12 @@ function App() {
         {isAboutPopupOpen && (
           <About isOpen={isAboutPopupOpen} onClose={closeAllPopups} />
         )}
+
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
+          isSuccess={isRegistrationSuccess}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
