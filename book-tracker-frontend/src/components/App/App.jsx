@@ -21,7 +21,7 @@ import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
 import EditName from "../form/EditName/EditName.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import About from "../About/About.jsx";
-import InfoTooltip from "../InfoTooltip/InfoTooltip.jsx";
+import InfoTooltip from "../InfoTootip/InfoTooltip.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -90,6 +90,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditNamePopupOpen(false);
     setIsAboutPopupOpen(false);
+
     if (isRegistrationSuccess) {
       navigate("/signin");
       setIsRegistrationSuccess(false);
@@ -174,7 +175,7 @@ function App() {
   };
 
   const handleRegister = (name, email, password) => {
-    auth
+    return auth
 
       .register(name, email, password)
 

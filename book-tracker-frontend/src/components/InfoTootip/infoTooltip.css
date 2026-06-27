@@ -1,49 +1,116 @@
-.popup__container_type_tooltip {
+/* --- InfoTooltip.css --- */
+
+.tooltip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    visibility 0s 0.3s,
+    opacity 0.3s linear;
+  z-index: 1000;
+}
+
+.tooltip_opened {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s linear;
+}
+
+.tooltip__container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  padding: 60px 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 60px 36px;
   text-align: center;
+  max-width: 430px;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
 }
 
-.popup__tooltip-icon {
+.tooltip__close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  transition: opacity 0.3s ease;
+}
+
+.tooltip__close-button:hover {
+  opacity: 0.6;
+}
+
+.tooltip__icon {
   width: 120px;
   height: 120px;
+  margin-bottom: 32px;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  margin-bottom: 32px;
 }
 
-.popup__tooltip-icon_success {
-  background-image: url("../images/success-icon.svg");
+.tooltip__icon_type_success {
+  background-color: #4caf50; /* Cambiar por tu SVG de éxito en producción */
+  border-radius: 50%;
 }
 
-.popup__tooltip-icon_error {
-  background-image: url("../images/error-icon.svg");
+.tooltip__icon_type_error {
+  background-color: #f44336; /* Cambiar por tu SVG de error en producción */
+  border-radius: 50%;
 }
 
-.popup__tooltip-message {
+.tooltip__message {
   font-family: "Inter", Arial, sans-serif;
   font-weight: 900;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.2;
   color: #000000;
   margin: 0;
 }
 
+.tooltip__link {
+  margin-top: 25px;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 16px;
+  color: #000000;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.tooltip__link:hover {
+  color: #4caf50;
+}
+
 @media screen and (max-width: 600px) {
-  .popup__container_type_tooltip {
-    padding: 50px 36px;
+  .tooltip__container {
+    padding: 50px 24px;
+    max-width: 282px;
   }
 
-  .popup__tooltip-icon {
+  .tooltip__icon {
     width: 100px;
     height: 100px;
   }
 
-  .popup__tooltip-message {
-    font-size: 20px;
+  .tooltip__message {
+    font-size: 18px;
   }
 }
