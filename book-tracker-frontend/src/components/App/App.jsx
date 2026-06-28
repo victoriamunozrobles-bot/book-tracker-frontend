@@ -90,11 +90,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditNamePopupOpen(false);
     setIsAboutPopupOpen(false);
-
-    if (isRegistrationSuccess) {
-      navigate("/signin");
-      setIsRegistrationSuccess(false);
-    }
+    setIsInfoTooltipOpen(false);
   };
 
   useEffect(() => {
@@ -174,9 +170,17 @@ function App() {
       });
   };
 
-  const handleRegister = (name, email, password) => {
-    return auth
+  const closeTooltipAndRedirect = () => {
+    setIsInfoTooltipOpen(false);
+    if (isRegistrationSuccess) {
+      setIsRegistrationSuccess(false);
+      navigate("/signin");
+    }
+  };
 
+  const handleRegister = (name, email, password) => {
+    setIsRegistrationSuccess(false);
+    auth
       .register(name, email, password)
 
       .then(() => {
@@ -355,7 +359,7 @@ function App() {
 
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
-          onClose={closeAllPopups}
+          onClose={closeTooltipAndRedirect}
           isSuccess={isRegistrationSuccess}
         />
       </div>

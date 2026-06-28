@@ -1,8 +1,12 @@
 export const BASE_URL = "https://book-tracker.mooo.com";
 
-const checkResponse = (res) => {
+const checkResponse = async (res) => {
   if (res.ok) {
-    return res.json();
+    try {
+      return await res.json();
+    } catch {
+      return {};
+    }
   }
   return Promise.reject(`Error: ${res.status}`);
 };
