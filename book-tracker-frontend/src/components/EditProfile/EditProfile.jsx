@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./editProfile.css";
 
 export default function EditProfile({ isOpen, onClose, onUpdateProfile }) {
