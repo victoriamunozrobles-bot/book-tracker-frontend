@@ -11,12 +11,11 @@ import BookSearch from "../BookSearch/BookSearch.jsx";
 import { searchBooks } from "../../utils/ThirdPartyApi.js";
 import BookGallery from "../BookGallery/BookGallery.jsx";
 import Library from "../Library/Library.jsx";
-import EditAvatar from "../form/EditAvatar/EditAvatar.jsx";
-import EditName from "../form/EditName/EditName.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import About from "../About/About.jsx";
 import InfoTooltip from "../InfoTootip/InfoTooltip.jsx";
 import LandingPage from "../LandingPage/LandingPage.jsx";
+import EditProfile from "../form/EditProfile/EditProfile.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,8 +30,7 @@ function App() {
     !!localStorage.getItem("jwt"),
   );
   const navigate = useNavigate();
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isEditNamePopupOpen, setIsEditNamePopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isBooksLoaded, setIsBooksLoaded] = useState(false);
@@ -58,11 +56,10 @@ function App() {
   }, [savedBooks, userEmail, loggedIn, isBooksLoaded]);
 
   const closeAllPopups = () => {
-    setIsEditAvatarPopupOpen(false);
-    setIsEditNamePopupOpen(false);
     setIsAboutPopupOpen(false);
     setIsLoginPopupOpen(false);
     setIsRegisterPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
   };
 
   useEffect(() => {
@@ -71,15 +68,12 @@ function App() {
     }
   }, [currentUser]);
 
-  const handleUpdateAvatar = (data) => {
-    const avatarString = typeof data === "object" ? data.avatar : data;
-    setCurrentUser((prevUser) => ({ ...prevUser, avatar: avatarString }));
-    closeAllPopups();
-  };
-
-  const handleUpdateName = (data) => {
-    const nameString = typeof data === "object" ? data.name : data;
-    setCurrentUser((prevUser) => ({ ...prevUser, name: nameString }));
+  const handleUpdateProfile = (data) => {
+    setCurrentUser((prevUser) => ({
+      ...prevUser,
+      name: data.name,
+      avatar: data.avatar,
+    }));
     closeAllPopups();
   };
 
@@ -198,8 +192,7 @@ function App() {
             userAvatar={currentUser.avatar}
             onLoginClick={() => setIsLoginPopupOpen(true)}
             onRegisterClick={() => setIsRegisterPopupOpen(true)}
-            onEditAvatarClick={() => setIsEditAvatarPopupOpen(true)}
-            onEditNameClick={() => setIsEditNamePopupOpen(true)}
+            onEditProfileClick={() => setIsEditProfilePopupOpen(true)}
             onAboutClick={() => setIsAboutPopupOpen(true)}
             onSignOut={handleSignOut}
           />
@@ -259,19 +252,13 @@ function App() {
           }}
         />
 
-        {isEditAvatarPopupOpen && (
-          <EditAvatar
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-          />
-        )}
-        {isEditNamePopupOpen && (
-          <EditName
-            isOpen={isEditNamePopupOpen}
-            onClose={closeAllPopups}
-            onUpdateName={handleUpdateName}
-          />
+        <EditProfile
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateProfile={handleUpdateProfile}
+        />
+        {isAboutPopupOpen && (
+          <About isOpen={isAboutPopupOpen} onClose={closeAllPopups} />
         )}
         {isAboutPopupOpen && (
           <About isOpen={isAboutPopupOpen} onClose={closeAllPopups} />

@@ -8,8 +8,7 @@ export default function Header({
   userAvatar,
   onLoginClick,
   onRegisterClick,
-  onEditAvatarClick,
-  onEditNameClick,
+  onEditProfileClick,
   onAboutClick,
   onSignOut,
 }) {
@@ -64,20 +63,11 @@ export default function Header({
                 <button
                   className="header__dropdown-item"
                   onClick={() => {
-                    onEditNameClick();
+                    onEditProfileClick();
                     setIsDropdownOpen(false);
                   }}
                 >
-                  ✏️ Editar nombre
-                </button>
-                <button
-                  className="header__dropdown-item"
-                  onClick={() => {
-                    onEditAvatarClick();
-                    setIsDropdownOpen(false);
-                  }}
-                >
-                  🖼️ Editar avatar
+                  ⚙️ Editar perfil
                 </button>
                 <button
                   className="header__dropdown-item"
