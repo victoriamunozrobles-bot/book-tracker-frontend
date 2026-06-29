@@ -1,16 +1,11 @@
 import { useState, useEffect } from "react";
-import * as auth from "../../utils/MainApi.js";
+import * as MainApi from "../../utils/MainApi.js";
 import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import {
-  Route,
-  Routes,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import "../../index.css";
 import SideBar from "../SideBar/SideBar.jsx";
+import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import BookSearch from "../BookSearch/BookSearch.jsx";
@@ -22,12 +17,12 @@ import EditName from "../form/EditName/EditName.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import About from "../About/About.jsx";
 import InfoTooltip from "../InfoTootip/InfoTooltip.jsx";
+import LandingPage from "../LandingPage/LandingPage.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(() => {
     const savedUser = localStorage.getItem("currentUser");
     return savedUser ? JSON.parse(savedUser) : {};
@@ -36,6 +31,7 @@ function App() {
   const [isCheckingToken, setIsCheckingToken] = useState(
     !!localStorage.getItem("jwt"),
   );
+  const navigate = useNavigate();
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditNamePopupOpen, setIsEditNamePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +41,8 @@ function App() {
   const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
 
   const loadUserBooks = (email) => {
     console.log("1. LEYENDO de localStorage para:", email);
@@ -52,10 +50,6 @@ function App() {
     setSavedBooks(localBooks ? JSON.parse(localBooks) : []);
     setIsBooksLoaded(true);
   };
-
-  const location = useLocation();
-  const isAuthRoute =
-    location.pathname === "/signin" || location.pathname === "/signup";
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -90,7 +84,8 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditNamePopupOpen(false);
     setIsAboutPopupOpen(false);
-    setIsInfoTooltipOpen(false);
+    setIsLoginPopupOpen(false);
+    setIsRegisterPopupOpen(false);
   };
 
   useEffect(() => {
@@ -123,8 +118,7 @@ function App() {
     const jwt = localStorage.getItem("jwt");
 
     if (jwt) {
-      auth
-        .checkToken(jwt)
+      MainApi.checkToken(jwt)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
@@ -150,9 +144,7 @@ function App() {
     }
   };
   const handleLogin = (email, password) => {
-    auth
-
-      .authorize(email, password)
+    return MainApi.authorize(email, password)
 
       .then((data) => {
         if (data.token) {
@@ -160,7 +152,7 @@ function App() {
           setLoggedIn(true);
           setUserEmail(email);
           loadUserBooks(userEmail);
-
+          closeAllPopups();
           navigate("/");
         }
       })
@@ -172,24 +164,25 @@ function App() {
 
   const closeTooltipAndRedirect = () => {
     setIsInfoTooltipOpen(false);
+
     if (isRegistrationSuccess) {
       setIsRegistrationSuccess(false);
-      navigate("/signin");
+      setIsLoginPopupOpen(true);
     }
   };
 
   const handleRegister = (name, email, password) => {
     setIsRegistrationSuccess(false);
-    auth
-      .register(name, email, password)
+    return MainApi.register(name, email, password)
 
       .then(() => {
         setIsRegistrationSuccess(true);
+        closeAllPopups();
         setIsInfoTooltipOpen(true);
       })
 
       .catch((err) => {
-        console.error(err);
+        console.error("Error en el registro", err);
         setIsRegistrationSuccess(false);
         setIsInfoTooltipOpen(true);
       });
@@ -247,50 +240,52 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className={`page ${isAuthRoute ? "page--auth" : ""}`}>
-        {!isAuthRoute && (
-          <>
-            <div className="page-mobile__top-bar">
-              <button
-                className="page-mobile__hamburger"
-                onClick={toggleMenu}
-                aria-label="Abrir menú"
-              >
-                ☰
-              </button>
-            </div>
-
-            <SideBar
-              className="page__sidebar"
-              loggedIn={loggedIn}
-              userEmail={userEmail}
-              userName={currentUser.name || "Lector"}
-              userAvatar={currentUser.avatar}
-              onEditAvatarClick={handleEditAvatarClick}
-              onEditNameClick={handleEditNameClick}
-              isOpen={isMenuOpen}
-              onCloseMenu={closeMenu}
-              onSignOut={handleSignOut}
-              onAboutClick={handleAboutClick}
-            />
-
-            {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
-          </>
-        )}
-
+      <div className="page">
+        {" "}
+        <div className="page-mobile__top-bar">
+          <button className="page-mobile__hamburger" onClick={toggleMenu}>
+            ☰
+          </button>
+        </div>
+        <SideBar
+          className="page__sidebar"
+          loggedIn={loggedIn}
+          userEmail={userEmail}
+          userName={currentUser.name || "Lector"}
+          userAvatar={currentUser.avatar}
+          onEditAvatarClick={handleEditAvatarClick}
+          onEditNameClick={handleEditNameClick}
+          isOpen={isMenuOpen}
+          onCloseMenu={closeMenu}
+          onSignOut={handleSignOut}
+          onAboutClick={handleAboutClick}
+        />
+        {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
         <main className="page__main-content">
+          <Header
+            loggedIn={loggedIn}
+            onLoginClick={() => setIsLoginPopupOpen(true)}
+            onRegisterClick={() => setIsRegisterPopupOpen(true)}
+            onSignOut={handleSignOut}
+          />
+
           <Routes>
             <Route
               path="/"
               element={
-                <ProtectedRoute loggedIn={loggedIn}>
+                loggedIn ? (
                   <Library
                     savedBooks={savedBooks}
                     setSavedBooks={setSavedBooks}
                   />
-                </ProtectedRoute>
+                ) : (
+                  <LandingPage
+                    onRegisterClick={() => setIsRegisterPopupOpen(true)}
+                  />
+                )
               }
             />
+
             <Route
               path="/search"
               element={
@@ -308,35 +303,29 @@ function App() {
               }
             />
 
-            <Route
-              path="/signin"
-              element={
-                loggedIn ? (
-                  <Navigate to="/" replace />
-                ) : (
-                  <Login handleLogin={handleLogin} />
-                )
-              }
-            />
-
-            <Route
-              path="/signup"
-              element={
-                loggedIn ? (
-                  <Navigate to="/" replace />
-                ) : (
-                  <Register handleRegister={handleRegister} />
-                )
-              }
-            />
-
-            <Route
-              path="*"
-              element={<Navigate to={loggedIn ? "/" : "/signin"} replace />}
-            />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
-
+        {/* MODALES DE AUTH */}
+        <Login
+          isOpen={isLoginPopupOpen}
+          onClose={closeAllPopups}
+          handleLogin={handleLogin}
+          onSwitchToRegister={() => {
+            setIsLoginPopupOpen(false);
+            setIsRegisterPopupOpen(true);
+          }}
+        />
+        <Register
+          isOpen={isRegisterPopupOpen}
+          onClose={closeAllPopups}
+          handleRegister={handleRegister}
+          onSwitchToLogin={() => {
+            setIsRegisterPopupOpen(false);
+            setIsLoginPopupOpen(true);
+          }}
+        />
+        {/* OTROS MODALES */}
         {isEditAvatarPopupOpen && (
           <EditAvatar
             isOpen={isEditAvatarPopupOpen}
@@ -344,7 +333,6 @@ function App() {
             onUpdateAvatar={handleUpdateAvatar}
           />
         )}
-
         {isEditNamePopupOpen && (
           <EditName
             isOpen={isEditNamePopupOpen}
@@ -352,11 +340,9 @@ function App() {
             onUpdateName={handleUpdateName}
           />
         )}
-
         {isAboutPopupOpen && (
           <About isOpen={isAboutPopupOpen} onClose={closeAllPopups} />
         )}
-
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
           onClose={closeTooltipAndRedirect}
