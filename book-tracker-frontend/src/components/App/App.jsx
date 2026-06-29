@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import * as auth from "../../utils/auth.js";
+import * as auth from "../../utils/MainApi.js";
 import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import {
