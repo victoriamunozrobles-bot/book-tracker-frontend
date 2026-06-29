@@ -3,18 +3,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 0 20px 0;
-  border-bottom: 2px solid #cccccc;
+  border-bottom: 4px solid #000000;
   margin-bottom: 30px;
   position: relative;
   background-color: transparent;
 }
 
 .header__title {
-  font-family: "Inter", Arial, sans-serif;
-  font-size: 24px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 28px;
   font-weight: 900;
   color: #000000;
   margin: 0;
+  text-transform: uppercase;
 }
 
 .header__actions {
@@ -24,24 +25,29 @@
 }
 
 .header__button {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
-  border: none;
-  background: transparent;
-  transition: opacity 0.3s;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.1s ease;
+  padding: 8px 16px;
 }
 
-.header__button:hover {
-  opacity: 0.7;
+.header__button_type_text {
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .header__button_type_solid {
-  background-color: #000000;
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 4px;
+  background-color: #ffeb66;
+  color: #000000;
+}
+
+.header__button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px #000000;
 }
 
 .header__profile {
@@ -54,33 +60,33 @@
   gap: 10px;
   cursor: pointer;
   padding: 5px 10px;
-  border-radius: 8px;
-  transition: background-color 0.3s;
+  border: 3px solid transparent;
 }
 
 .header__user-info:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  border: 3px solid #000000;
+  background-color: #ffde00;
 }
 
 .header__name {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: bold;
   color: #000000;
 }
 
 .header__avatar {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border: 3px solid #000000;
   background-size: cover;
   background-position: center;
-  background-color: #cccccc;
+  background-color: #ffffff;
 }
 
 .header__arrow {
-  font-size: 10px;
-  color: #333333;
+  font-size: 12px;
+  color: #000000;
 }
 
 .header__dropdown {
@@ -88,38 +94,32 @@
   top: 60px;
   right: 0;
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+  border: 3px solid #000000;
+  box-shadow: 6px 6px 0px #000000;
   display: flex;
   flex-direction: column;
-  min-width: 180px;
-  padding: 10px 0;
+  min-width: 200px;
+  padding: 0;
   z-index: 100;
 }
 
 .header__dropdown-item {
   background: transparent;
   border: none;
+  border-bottom: 3px solid #000000;
   text-align: left;
   padding: 12px 20px;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
-  color: #333333;
-  transition: background-color 0.2s;
+  color: #000000;
+}
+
+.header__dropdown-item:last-child {
+  border-bottom: none;
 }
 
 .header__dropdown-item:hover {
-  background-color: #f0f0f0;
-}
-
-.header__divider {
-  height: 1px;
-  background-color: #eeeeee;
-  margin: 5px 0;
-}
-
-.header__dropdown-item_type_logout {
-  color: #f44336;
-  font-weight: 600;
+  background-color: #ffde00;
 }

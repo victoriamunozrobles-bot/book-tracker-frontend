@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
-import "./Login.css";
+import "./login.css";
 
 export default function Login({
   isOpen,
