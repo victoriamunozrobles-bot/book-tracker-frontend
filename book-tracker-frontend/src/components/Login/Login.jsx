@@ -8,8 +8,7 @@ export default function Login({
   handleLogin,
   onSwitchToRegister,
 }) {
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormAndValidation();
+  const { values, handleChange, errors, isValid } = useFormAndValidation();
   const [apiError, setApiError] = useState("");
 
   const handleSubmit = (e) => {
