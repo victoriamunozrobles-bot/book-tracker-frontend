@@ -15,7 +15,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import About from "../About/About.jsx";
 import InfoTooltip from "../InfoTootip/InfoTooltip.jsx";
 import LandingPage from "../LandingPage/LandingPage.jsx";
-import EditProfile from "../form/EditProfile/EditProfile.jsx";
+import EditProfile from "../EditProfile/EditProfile.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);

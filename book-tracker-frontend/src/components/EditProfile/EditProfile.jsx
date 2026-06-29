@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { useFormAndValidation } from "../../../utils/useFormAndValidation";
+import { useFormAndValidation } from "../../utils/useFormAndValidation";
 import CurrentUserContext from "../../../contexts/CurrentUserContext";
 import "./editProfile.css";
 
