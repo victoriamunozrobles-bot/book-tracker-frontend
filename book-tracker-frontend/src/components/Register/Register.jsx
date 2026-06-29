@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
-import "./Register.css";
+import "./register.css";
 
 export default function Login({
   isOpen,
   onClose,
-  handleLogin,
+  handleRegister,
   onSwitchToRegister,
 }) {
   const { values, handleChange, errors, isValid } = useFormAndValidation();
@@ -15,7 +15,7 @@ export default function Login({
     e.preventDefault();
     if (!isValid) return;
 
-    handleLogin(values.email, values.password).catch((err) => {
+    handleRegister(values.email, values.password).catch((err) => {
       console.error(err);
       setApiError("Correo o contraseña incorrectos.");
     });
