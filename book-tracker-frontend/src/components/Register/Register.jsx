@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
+import logo from "../../images/logo.svg";
 
 export default function Register({ handleRegister }) {
   const { values, handleChange, errors, isValid } = useFormAndValidation();
@@ -22,6 +23,9 @@ export default function Register({ handleRegister }) {
 
   return (
     <div className="register">
+      <div className="register__logo-container">
+        <img src={logo} alt="Logo de Book Tracker" className="register__logo" />
+      </div>
       <h2 className="register__title">Regístrate</h2>
       <form className="register__form" onSubmit={handleSubmit} noValidate>
         <input

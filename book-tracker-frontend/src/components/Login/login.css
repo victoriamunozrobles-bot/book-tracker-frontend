@@ -14,6 +14,19 @@
   box-sizing: border-box;
 }
 
+.login__logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.login__logo {
+  width: 200px;
+  height: auto;
+}
+
 .login__title {
   font-family: inherit;
   font-weight: 900;

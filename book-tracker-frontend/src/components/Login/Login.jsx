@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
+import logo from "../../images/logo.svg";
 
 export default function Login({ handleLogin }) {
   const { values, handleChange, errors, isValid } = useFormAndValidation();
@@ -18,6 +19,9 @@ export default function Login({ handleLogin }) {
 
   return (
     <div className="login">
+      <div className="register__logo-container">
+        <img src={logo} alt="Logo de Book Tracker" className="register__logo" />
+      </div>
       <h2 className="login__title">Inicia sesión</h2>
       <form className="login__form" onSubmit={handleSubmit} noValidate>
         <input
