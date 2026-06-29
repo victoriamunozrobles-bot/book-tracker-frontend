@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./header.css";
 
 export default function Header({
@@ -13,6 +14,7 @@ export default function Header({
   onSignOut,
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const location = useLocation();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -21,8 +23,27 @@ export default function Header({
   return (
     <header className="header">
       <div className="header__logo-area">
-        <h1 className="header__title">📚 Book Tracker</h1>
+        <Link to="/" className="header__logo-link">
+          <h1 className="header__title">Book Tracker</h1>
+        </Link>
       </div>
+
+      {loggedIn && (
+        <nav className="header__nav">
+          <Link
+            to="/"
+            className={`header__nav-link ${location.pathname === "/" ? "header__nav-link_active" : ""}`}
+          >
+            Mi Biblioteca
+          </Link>
+          <Link
+            to="/search"
+            className={`header__nav-link ${location.pathname === "/search" ? "header__nav-link_active" : ""}`}
+          >
+            Buscar Libros
+          </Link>
+        </nav>
+      )}
 
       <div className="header__actions">
         {loggedIn ? (

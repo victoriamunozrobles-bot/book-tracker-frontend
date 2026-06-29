@@ -19,7 +19,9 @@
 }
 
 .header__actions {
+  flex: 1;
   display: flex;
+  justify-content: flex-end;
   gap: 15px;
   align-items: center;
 }
@@ -122,4 +124,60 @@
 
 .header__dropdown-item:hover {
   background-color: #ffde00;
+}
+
+.header__logo-area {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.header__logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header__nav {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__nav-link {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.header__nav-link:hover {
+  background-color: #ffde00;
+  border: 3px solid #000000;
+}
+
+.header__nav-link_active {
+  background-color: #ffde00;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+@media screen and (max-width: 850px) {
+  .header {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .header__logo-area,
+  .header__nav,
+  .header__actions {
+    justify-content: center;
+    width: 100%;
+  }
 }
