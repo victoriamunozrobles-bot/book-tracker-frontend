@@ -1,105 +1,112 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
-import logo from "../../images/logo.svg";
+import "./Register.css";
 
-export default function Register({ handleRegister }) {
-  const { values, handleChange, errors, isValid } = useFormAndValidation();
+export default function Login({
+  isOpen,
+  onClose,
+  handleLogin,
+  onSwitchToRegister,
+}) {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
   const [apiError, setApiError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (values.password !== values.confirmPassword) {
-      setApiError("Las contraseñas no coinciden.");
-      return;
-    }
+    if (!isValid) return;
 
-    setApiError("");
-    handleRegister(values.name, values.email, values.password);
+    handleLogin(values.email, values.password).catch((err) => {
+      console.error(err);
+      setApiError("Correo o contraseña incorrectos.");
+    });
   };
 
-  const isFormCompletelyValid =
-    isValid && values.password === values.confirmPassword;
-
   return (
-    <div className="register">
-      <div className="register__logo-container">
-        <img src={logo} alt="Logo de Book Tracker" className="register__logo" />
-      </div>
-      <h2 className="register__title">Regístrate</h2>
-      <form className="register__form" onSubmit={handleSubmit} noValidate>
-        <input
-          className="register_form__input"
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          value={values.name || ""}
-          onChange={handleChange}
-          required
-          minLength="2"
-        />
-        <span className="register__error">{errors.name}</span>
+    <div className={`register-popup ${isOpen ? "register-popup_opened" : ""}`}>
+      <div className="register-popup__container">
+        <button
+          type="button"
+          className="register-popup__close-button"
+          onClick={onClose}
+        >
+          ❌
+        </button>
 
-        <input
-          className="register_form__input"
-          type="email"
-          name="email"
-          placeholder="Correo electrónico"
-          value={values.email || ""}
-          onChange={handleChange}
-          required
-        />
-        <span className="register__error">{errors.email}</span>
+        <h2 className="register-popup__title">Inicia sesión</h2>
+        <form
+          className="register-popup__form"
+          onSubmit={handleSubmit}
+          noValidate
+        >
+          <input
+            className="register-popup__input"
+            type="text"
+            name="name"
+            placeholder="Nombre"
+            value={values.name || ""}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="register-popup__input"
+            type="email"
+            name="email"
+            placeholder="Correo electrónico"
+            value={values.email || ""}
+            onChange={handleChange}
+            required
+          />
+          <span className="register-popup__error">{errors.email}</span>
 
-        <input
-          className="register_form__input"
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          value={values.password || ""}
-          onChange={handleChange}
-          required
-          minLength="8"
-        />
-        <span className="register__error">{errors.password}</span>
+          <input
+            className="register-popup__input"
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={values.password || ""}
+            onChange={handleChange}
+            required
+            minLength="8"
+          />
 
-        <input
-          className="register_form__input"
-          type="password"
-          name="confirmPassword"
-          placeholder="Volver a escribir la contraseña"
-          value={values.confirmPassword || ""}
-          onChange={handleChange}
-          required
-        />
-        <span className="register__error">
-          {values.confirmPassword && values.password !== values.confirmPassword
-            ? "Las contraseñas no coinciden"
-            : ""}
-        </span>
+          <input
+            className="register-popup__input"
+            type="password"
+            name="password"
+            placeholder="Confirmar ontraseña"
+            value={values.password || ""}
+            onChange={handleChange}
+            required
+            minLength="8"
+          />
+          <span className="register-popup__error">{errors.password}</span>
 
-        {apiError && (
-          <span className="register__error register__error_api">
-            {apiError}
-          </span>
-        )}
+          {apiError && (
+            <span className="register-popup__error register-popup__error_api">
+              {apiError}
+            </span>
+          )}
 
-        <div className="form__actions">
           <button
-            className={`register_form__button ${!isFormCompletelyValid ? "register_form__button_disabled" : ""}`}
+            className={`register-popup__button ${!isValid ? "register-popup__button_disabled" : ""}`}
             type="submit"
-            disabled={!isFormCompletelyValid}
+            disabled={!isValid}
           >
-            Regístrate
+            Inicia sesión
           </button>
+        </form>
 
-          <div className="register__signup">
-            <Link className="register__signup_link" to="/signin">
-              o Iniciar sesión
-            </Link>
-          </div>
+        <div className="register-popup__signup">
+          <button
+            type="button"
+            className="register-popup__switch-link"
+            onClick={onSwitchToRegister}
+          >
+            ¿Aún no eres miembro? Regístrate aquí
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
