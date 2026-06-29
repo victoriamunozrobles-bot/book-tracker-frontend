@@ -15,8 +15,9 @@ export default function Login({
     e.preventDefault();
     if (!isValid) return;
 
+    setApiError("");
     handleLogin(values.email, values.password).catch((err) => {
-      console.error(err);
+      console.error("Detalle técnico del error:", err);
       setApiError("Correo o contraseña incorrectos.");
     });
   };
@@ -33,6 +34,7 @@ export default function Login({
         </button>
 
         <h2 className="login-popup__title">Inicia sesión</h2>
+
         <form className="login-popup__form" onSubmit={handleSubmit} noValidate>
           <input
             className="login-popup__input"

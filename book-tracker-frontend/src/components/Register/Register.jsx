@@ -1,25 +1,32 @@
 import { useState } from "react";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
-import "./register.css";
+import "./Register.css";
 
-export default function Login({
+export default function Register({
   isOpen,
   onClose,
   handleRegister,
-  onSwitchToRegister,
+  onSwitchToLogin,
 }) {
   const { values, handleChange, errors, isValid } = useFormAndValidation();
   const [apiError, setApiError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isValid) return;
+    if (values.password !== values.confirmPassword) {
+      setApiError("Las contraseñas no coinciden.");
+      return;
+    }
 
-    handleRegister(values.email, values.password).catch((err) => {
-      console.error(err);
-      setApiError("Correo o contraseña incorrectos.");
+    setApiError("");
+    handleRegister(values.name, values.email, values.password).catch((err) => {
+      console.error("Detalle técnico del error:", err);
+      setApiError("Hubo un error al registrar el usuario.");
     });
   };
+
+  const isFormCompletelyValid =
+    isValid && values.password === values.confirmPassword;
 
   return (
     <div className={`register-popup ${isOpen ? "register-popup_opened" : ""}`}>
@@ -32,7 +39,8 @@ export default function Login({
           ❌
         </button>
 
-        <h2 className="register-popup__title">Inicia sesión</h2>
+        <h2 className="register-popup__title">REGÍSTRATE</h2>
+
         <form
           className="register-popup__form"
           onSubmit={handleSubmit}
@@ -46,7 +54,10 @@ export default function Login({
             value={values.name || ""}
             onChange={handleChange}
             required
+            minLength="2"
           />
+          <span className="register-popup__error">{errors.name}</span>
+
           <input
             className="register-popup__input"
             type="email"
@@ -68,18 +79,23 @@ export default function Login({
             required
             minLength="8"
           />
+          <span className="register-popup__error">{errors.password}</span>
 
           <input
             className="register-popup__input"
             type="password"
-            name="password"
-            placeholder="Confirmar ontraseña"
-            value={values.password || ""}
+            name="confirmPassword"
+            placeholder="Confirmar contraseña"
+            value={values.confirmPassword || ""}
             onChange={handleChange}
             required
-            minLength="8"
           />
-          <span className="register-popup__error">{errors.password}</span>
+          <span className="register-popup__error">
+            {values.confirmPassword &&
+            values.password !== values.confirmPassword
+              ? "Las contraseñas no coinciden"
+              : ""}
+          </span>
 
           {apiError && (
             <span className="register-popup__error register-popup__error_api">
@@ -88,11 +104,11 @@ export default function Login({
           )}
 
           <button
-            className={`register-popup__button ${!isValid ? "register-popup__button_disabled" : ""}`}
+            className={`register-popup__button ${!isFormCompletelyValid ? "register-popup__button_disabled" : ""}`}
             type="submit"
-            disabled={!isValid}
+            disabled={!isFormCompletelyValid}
           >
-            Inicia sesión
+            REGÍSTRATE
           </button>
         </form>
 
@@ -100,9 +116,9 @@ export default function Login({
           <button
             type="button"
             className="register-popup__switch-link"
-            onClick={onSwitchToRegister}
+            onClick={onSwitchToLogin}
           >
-            ¿Aún no eres miembro? Regístrate aquí
+            ¿Ya eres miembro? Inicia sesión aquí
           </button>
         </div>
       </div>
