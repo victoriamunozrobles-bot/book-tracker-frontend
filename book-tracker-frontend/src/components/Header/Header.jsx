@@ -1,56 +1,99 @@
-import { Link } from "react-router-dom";
-import logo from "../../images/logo.svg";
-import signOutIcon from "../../images/sign-out-icon.svg";
+import { useState } from "react";
+import "./Header.css";
 
-export default function Navigation({
+export default function Header({
   loggedIn,
-  onSignOut,
   userName,
+  userAvatar,
+  onLoginClick,
+  onRegisterClick,
   onEditAvatarClick,
   onEditNameClick,
-  userAvatar,
+  onAboutClick,
+  onSignOut,
 }) {
-  const defaultAvatar = `https://api.dicebear.com/9.x/pixel-art/svg?seed=${userName}`;
-  const finalAvatarUrl = userAvatar ? userAvatar : defaultAvatar;
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
   return (
-    <aside className="header">
-      <div className="header__top-row">
-        <Link to="/" className="header__logo-link">
-          <img src={logo} alt="Logo" className="header__logo" />
-        </Link>
-        <div className="header__auth-zone">
-          {loggedIn ? (
+    <header className="header">
+      <div className="header__logo-area">
+        <h1 className="header__title">📚 Book Tracker</h1>
+      </div>
+
+      <div className="header__actions">
+        {loggedIn ? (
+          <div className="header__profile">
+            <div className="header__user-info" onClick={toggleDropdown}>
+              <span className="header__name">{userName}</span>
+              <div
+                className="header__avatar"
+                style={{
+                  backgroundImage: `url(${userAvatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"})`,
+                }}
+              ></div>
+              <span className="header__arrow">▼</span>
+            </div>
+
+            {isDropdownOpen && (
+              <div className="header__dropdown">
+                <button
+                  className="header__dropdown-item"
+                  onClick={() => {
+                    onEditNameClick();
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  ✏️ Editar nombre
+                </button>
+                <button
+                  className="header__dropdown-item"
+                  onClick={() => {
+                    onEditAvatarClick();
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  🖼️ Editar avatar
+                </button>
+                <button
+                  className="header__dropdown-item"
+                  onClick={() => {
+                    onAboutClick();
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  ℹ️ Acerca de
+                </button>
+                <div className="header__divider"></div>
+                <button
+                  className="header__dropdown-item header__dropdown-item_type_logout"
+                  onClick={onSignOut}
+                >
+                  🚪 Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
             <button
-              className="header__logout-icon-btn"
-              onClick={onSignOut}
-              aria-label="Cerrar sesión"
-              title="Cerrar sesión"
+              className="header__button header__button_type_text"
+              onClick={onLoginClick}
             >
-              <img
-                className="header__logout-icon-btn"
-                src={signOutIcon}
-                alt="Cerrar sesión"
-              />
+              🔑 Iniciar sesión
             </button>
-          ) : (
-            <Link to="/signin" className="header__login-btn">
-              Iniciar sesión
-            </Link>
-          )}
-        </div>
+            <button
+              className="header__button header__button_type_solid"
+              onClick={onRegisterClick}
+            >
+              📝 Registrarse
+            </button>
+          </>
+        )}
       </div>
-      <div className="header__profile">
-        <img
-          src={finalAvatarUrl}
-          alt={`Avatar de ${userName}`}
-          className="header__avatar"
-          onClick={onEditAvatarClick}
-        />
-        <h2 className="header__greeting" onClick={onEditNameClick}>
-          Hola, {userName}
-        </h2>
-      </div>
-    </aside>
+    </header>
   );
 }

@@ -4,7 +4,6 @@ import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import "../../index.css";
-import SideBar from "../SideBar/SideBar.jsx";
 import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
@@ -36,7 +35,6 @@ function App() {
   const [isEditNamePopupOpen, setIsEditNamePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isBooksLoaded, setIsBooksLoaded] = useState(false);
   const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
@@ -45,18 +43,9 @@ function App() {
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
 
   const loadUserBooks = (email) => {
-    console.log("1. LEYENDO de localStorage para:", email);
     const localBooks = localStorage.getItem(`mySavedBooks_${email}`);
     setSavedBooks(localBooks ? JSON.parse(localBooks) : []);
     setIsBooksLoaded(true);
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
   };
 
   useEffect(() => {
@@ -67,18 +56,6 @@ function App() {
       );
     }
   }, [savedBooks, userEmail, loggedIn, isBooksLoaded]);
-
-  const handleEditAvatarClick = () => {
-    setIsEditAvatarPopupOpen(true);
-  };
-
-  const handleEditNameClick = () => {
-    setIsEditNamePopupOpen(true);
-  };
-
-  const handleAboutClick = () => {
-    setIsAboutPopupOpen(true);
-  };
 
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
@@ -96,27 +73,18 @@ function App() {
 
   const handleUpdateAvatar = (data) => {
     const avatarString = typeof data === "object" ? data.avatar : data;
-
-    setCurrentUser((prevUser) => ({
-      ...prevUser,
-      avatar: avatarString,
-    }));
+    setCurrentUser((prevUser) => ({ ...prevUser, avatar: avatarString }));
     closeAllPopups();
   };
 
   const handleUpdateName = (data) => {
     const nameString = typeof data === "object" ? data.name : data;
-    setCurrentUser((prevUser) => ({
-      ...prevUser,
-      name: nameString,
-    }));
-
+    setCurrentUser((prevUser) => ({ ...prevUser, name: nameString }));
     closeAllPopups();
   };
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
-
     if (jwt) {
       MainApi.checkToken(jwt)
         .then((res) => {
@@ -135,36 +103,28 @@ function App() {
 
   const handleSaveBook = (bookToSave) => {
     const isAlreadySaved = savedBooks.some((book) => book.id === bookToSave.id);
-
     if (!isAlreadySaved) {
       setSavedBooks([bookToSave, ...savedBooks]);
-      console.log("¡Libro guardado con éxito!", bookToSave.volumeInfo.title);
-    } else {
-      console.log("Este libro ya está en tu biblioteca.");
     }
   };
+
   const handleLogin = (email, password) => {
     return MainApi.authorize(email, password)
-
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           setLoggedIn(true);
           setUserEmail(email);
-          loadUserBooks(userEmail);
+          loadUserBooks(email);
           closeAllPopups();
           navigate("/");
         }
       })
-
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   };
 
   const closeTooltipAndRedirect = () => {
     setIsInfoTooltipOpen(false);
-
     if (isRegistrationSuccess) {
       setIsRegistrationSuccess(false);
       setIsLoginPopupOpen(true);
@@ -174,13 +134,11 @@ function App() {
   const handleRegister = (name, email, password) => {
     setIsRegistrationSuccess(false);
     return MainApi.register(name, email, password)
-
       .then(() => {
         setIsRegistrationSuccess(true);
         closeAllPopups();
         setIsInfoTooltipOpen(true);
       })
-
       .catch((err) => {
         console.error("Error en el registro", err);
         setIsRegistrationSuccess(false);
@@ -191,30 +149,22 @@ function App() {
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("currentUser");
-
     setLoggedIn(false);
     setCurrentUser({});
     setUserEmail("");
-
-    navigate("/signin");
+    navigate("/");
   };
 
   const handleSearch = (query) => {
     setIsLoading(true);
     setHasSearched(true);
-
     searchBooks(query)
-      .then((results) => {
-        setSearchResults(results);
-      })
-
+      .then((results) => setSearchResults(results))
       .catch((err) => {
         console.error(err);
         setSearchResults([]);
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -241,31 +191,16 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        {" "}
-        <div className="page-mobile__top-bar">
-          <button className="page-mobile__hamburger" onClick={toggleMenu}>
-            ☰
-          </button>
-        </div>
-        <SideBar
-          className="page__sidebar"
-          loggedIn={loggedIn}
-          userEmail={userEmail}
-          userName={currentUser.name || "Lector"}
-          userAvatar={currentUser.avatar}
-          onEditAvatarClick={handleEditAvatarClick}
-          onEditNameClick={handleEditNameClick}
-          isOpen={isMenuOpen}
-          onCloseMenu={closeMenu}
-          onSignOut={handleSignOut}
-          onAboutClick={handleAboutClick}
-        />
-        {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
         <main className="page__main-content">
           <Header
             loggedIn={loggedIn}
+            userName={currentUser.name || "Lector"}
+            userAvatar={currentUser.avatar}
             onLoginClick={() => setIsLoginPopupOpen(true)}
             onRegisterClick={() => setIsRegisterPopupOpen(true)}
+            onEditAvatarClick={() => setIsEditAvatarPopupOpen(true)}
+            onEditNameClick={() => setIsEditNamePopupOpen(true)}
+            onAboutClick={() => setIsAboutPopupOpen(true)}
             onSignOut={handleSignOut}
           />
 
@@ -285,7 +220,6 @@ function App() {
                 )
               }
             />
-
             <Route
               path="/search"
               element={
@@ -302,11 +236,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
-        {/* MODALES DE AUTH */}
+
         <Login
           isOpen={isLoginPopupOpen}
           onClose={closeAllPopups}
@@ -325,7 +258,7 @@ function App() {
             setIsLoginPopupOpen(true);
           }}
         />
-        {/* OTROS MODALES */}
+
         {isEditAvatarPopupOpen && (
           <EditAvatar
             isOpen={isEditAvatarPopupOpen}
