@@ -6,9 +6,11 @@ export default function Library({ savedBooks, setSavedBooks }) {
   const [selectedBookForNotes, setSelectedBookForNotes] = useState(null);
   const [selectedBookForDetails, setSelectedBookForDetails] = useState(null);
 
+  const getId = (book) => book._id || book.id;
+
   const handleRemoveBook = (bookToRemove) => {
     const updatedBooks = savedBooks.filter(
-      (book) => book.id !== bookToRemove.id,
+      (book) => getId(book) !== getId(bookToRemove),
     );
     setSavedBooks(updatedBooks);
     setSelectedBookForDetails(null);
@@ -26,7 +28,7 @@ export default function Library({ savedBooks, setSavedBooks }) {
     if (!newNoteText.trim()) return;
 
     const updatedBooks = savedBooks.map((book) => {
-      if (book.id === bookToUpdate.id) {
+      if (getId(book) === getId(bookToUpdate)) {
         const currentNotes = book.notes || [];
 
         return {
@@ -42,7 +44,7 @@ export default function Library({ savedBooks, setSavedBooks }) {
 
   const handleDeleteNote = (bookToUpdate, noteIndex) => {
     const updatedBooks = savedBooks.map((book) => {
-      if (book.id === bookToUpdate.id) {
+      if (getId(book) === getId(bookToUpdate)) {
         const newNotes = book.notes.filter((_, i) => i !== noteIndex);
         return { ...book, notes: newNotes };
       }
@@ -55,7 +57,7 @@ export default function Library({ savedBooks, setSavedBooks }) {
     if (!editedText.trim()) return;
 
     const updatedBooks = savedBooks.map((book) => {
-      if (book.id === bookToUpdate.id) {
+      if (getId(book) === getId(bookToUpdate)) {
         const newNotes = [...book.notes];
         newNotes[noteIndex] = editedText;
         return { ...book, notes: newNotes };
@@ -77,13 +79,14 @@ export default function Library({ savedBooks, setSavedBooks }) {
       {savedBooks.length > 0 ? (
         <div className="book-gallery__list">
           {savedBooks.map((book) => {
-            const info = book.volumeInfo;
-            const title = info?.title || "Título desconocido";
-            const coverImage = info?.imageLinks?.thumbnail;
+            const title =
+              book.volumeInfo?.title || book.title || "Título desconocido";
+            const coverImage =
+              book.volumeInfo?.imageLinks?.thumbnail || book.coverImage;
 
             return (
               <article
-                key={book.id}
+                key={getId(book)} /* ¡Aquí se arregla el warning de React! */
                 className="book-gallery__item"
                 onClick={() => setSelectedBookForDetails(book)}
               >
@@ -106,11 +109,11 @@ export default function Library({ savedBooks, setSavedBooks }) {
 
       {selectedBookForDetails && (
         <div className="book-modal">
-          {" "}
           <BookCard
             book={
-              savedBooks.find((b) => b.id === selectedBookForDetails.id) ||
-              selectedBookForDetails
+              savedBooks.find(
+                (b) => getId(b) === getId(selectedBookForDetails),
+              ) || selectedBookForDetails
             }
             inLibrary={true}
             onCardClose={() => setSelectedBookForDetails(null)}

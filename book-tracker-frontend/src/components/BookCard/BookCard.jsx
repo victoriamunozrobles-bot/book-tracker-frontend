@@ -12,19 +12,28 @@ export default function BookCard({
   onEditNote,
   inLibrary = false,
 }) {
-  const info = book.volumeInfo;
+  const info = book.volumeInfo || {};
 
-  const title = info.title || "Título desconocido";
-  const author = info.authors ? info.authors[0] : "Autor desconocido";
-  const synopsis = info.description || "Sin sinopsis disponible.";
-  const pages = info.pageCount || "N/A";
-  const genre = info.categories ? info.categories[0] : "General";
-  const coverImage = info.imageLinks?.thumbnail || exampleImg;
-
+  const title = info.title || book.title || "Título desconocido";
+  const author =
+    (info.authors && info.authors[0]) || book.author || "Autor desconocido";
+  const synopsis =
+    info.description || book.description || "Sin sinopsis disponible.";
+  const pages = info.pageCount || book.pages || "N/A";
+  const genre =
+    (info.categories && info.categories[0]) || book.genre || "General";
+  const coverImage =
+    info.imageLinks?.thumbnail || book.coverImage || exampleImg;
   const savedNotes = book.notes || [];
+
+  const readingStatus = book.userMeta?.status || book.status;
+  const readingStartDate = book.userMeta?.startDate || book.startDate;
+  const readingEndDate = book.userMeta?.endDate || book.endDate;
+  const hasTrackingData = readingStatus && readingStartDate;
 
   const [editingNoteIndex, setEditingNoteIndex] = useState(null);
   const [editNoteText, setEditNoteText] = useState("");
+
   const startEditing = (index, currentText) => {
     setEditingNoteIndex(index);
     setEditNoteText(currentText);
@@ -39,6 +48,7 @@ export default function BookCard({
     onEditNote(book, index, editNoteText);
     setEditingNoteIndex(null);
   };
+
   return (
     <article className="book-card" onClick={(e) => e.stopPropagation()}>
       <button
@@ -52,30 +62,28 @@ export default function BookCard({
       <img className="book-card__image" src={coverImage} alt={title} />
 
       <div className="book-card__content">
-        {book.userMeta && (
+        {hasTrackingData && (
           <div className="book-card__meta">
             <span
-              className={`book-card__status ${book.userMeta.status === "Leyendo" ? "book-card__status_reading" : "book-card__status_finished"}`}
+              className={`book-card__status ${readingStatus === "Leyendo" ? "book-card__status_reading" : "book-card__status_finished"}`}
             >
-              {book.userMeta.status === "Leyendo"
-                ? "📖 Leyendo"
-                : "✅ Terminado"}
+              {readingStatus === "Leyendo" ? "📖 Leyendo" : "✅ Terminado"}
             </span>
 
             <div className="book-card__dates">
               <p>
-                <strong>Inicio:</strong> {book.userMeta.startDate}
+                <strong>Inicio:</strong> {readingStartDate}
               </p>
 
-              {book.userMeta.status === "Terminado" &&
-                book.userMeta.endDate && (
-                  <p>
-                    <strong>Fin:</strong> {book.userMeta.endDate}
-                  </p>
-                )}
+              {readingStatus === "Terminado" && readingEndDate && (
+                <p>
+                  <strong>Fin:</strong> {readingEndDate}
+                </p>
+              )}
             </div>
           </div>
         )}
+
         <div className="book-card__header">
           <h2 className="book-card__title">{title}</h2>
           <p className="book-card__author">{author}</p>

@@ -119,18 +119,16 @@ function App() {
 
   const confirmSaveBook = ({ book, meta }) => {
     const bookDataToSave = {
-      bookId: book.id,
+      googleBookId: book.id,
       title: book.volumeInfo?.title || "Sin título",
-      authors: book.volumeInfo?.authors
+      author: book.volumeInfo?.authors
         ? book.volumeInfo.authors.join(", ")
-        : "Desconocido",
-      description: book.volumeInfo?.description || "Sin descripción",
-      image:
+        : "Autor desconocido",
+      coverImage:
         book.volumeInfo?.imageLinks?.thumbnail ||
-        "https://via.placeholder.com/150",
-      link: book.volumeInfo?.infoLink || "",
+        "https://placehold.co/150x200?text=Sin+Portada",
       startDate: meta.startDate,
-      endDate: meta.endDate || "",
+      endDate: meta.endDate || null,
       status: meta.status,
     };
 

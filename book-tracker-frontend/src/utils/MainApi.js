@@ -1,4 +1,4 @@
-export const BASE_URL = "https://book-tracker.mooo.com/api";
+export const BASE_URL = "https://book-tracker.mooo.com";
 
 const checkResponse = async (res) => {
   if (res.ok) {
