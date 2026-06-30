@@ -16,7 +16,7 @@ import About from "../About/About.jsx";
 import InfoTooltip from "../InfoTootip/InfoTooltip.jsx";
 import LandingPage from "../LandingPage/LandingPage.jsx";
 import EditProfile from "../EditProfile/EditProfile.jsx";
-import SaveBookModal from "../form/SaveBookModal/SaveBookModal.jsx";
+import SaveBookModal from "../SaveBookModal/SaveBookModal.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
