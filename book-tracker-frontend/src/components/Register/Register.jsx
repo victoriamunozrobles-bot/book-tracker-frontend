@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
-import "./Register.css";
+import "./register.css";
 
 export default function Register({
   isOpen,
