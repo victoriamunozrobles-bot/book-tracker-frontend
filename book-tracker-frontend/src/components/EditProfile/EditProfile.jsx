@@ -9,18 +9,16 @@ export default function EditProfile({ isOpen, onClose, onUpdateProfile }) {
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
-    if (isOpen) {
+    if (currentUser && isOpen) {
       setValues({
         name: currentUser.name || "",
         avatar: currentUser.avatar || "",
       });
     }
-  }, [isOpen, currentUser, setValues]);
+  }, [currentUser, isOpen, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isValid) return;
-
     onUpdateProfile({
       name: values.name,
       avatar: values.avatar,

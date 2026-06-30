@@ -23,13 +23,13 @@
   font-weight: bold;
   font-size: 0.76rem;
   padding: 12px 15px;
-  margin-bottom: 15px;
   background-color: #fdfbf7;
   border: 1px solid #0a100d;
   box-shadow: 2px 2px 0px #0a100d;
   transition: all 0.2s ease;
   display: flex;
   gap: 10px;
+  justify-content: center;
 }
 
 .navigation__link:hover {
@@ -42,4 +42,36 @@
   background-color: #c8b9eb;
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0px #0a100d;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation {
+    width: 100px;
+    padding: 10px;
+  }
+
+  .navigation__link {
+    font-size: 0.7rem;
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navigation {
+    width: 100%;
+    flex-direction: row;
+    padding: 10px;
+  }
+
+  .navigation__nav {
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navigation__link {
+    margin-bottom: 0;
+    flex: 1;
+    padding: 8px;
+  }
 }

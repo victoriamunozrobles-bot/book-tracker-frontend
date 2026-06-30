@@ -134,3 +134,50 @@
   box-shadow: none;
   cursor: not-allowed;
 }
+
+@media screen and (max-width: 768px) {
+  .edit-popup__container {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .edit-popup__close-button {
+    top: -10px;
+    right: -10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .edit-popup__container {
+    width: 90%;
+    padding: 25px 20px;
+    max-height: 90vh;
+  }
+
+  .edit-popup__close-button {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .edit-popup__title {
+    font-size: 22px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+
+  .edit-popup__input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .edit-popup__button {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+}
