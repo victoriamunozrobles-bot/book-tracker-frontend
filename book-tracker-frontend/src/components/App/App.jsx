@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import * as MainApi from "../../utils/MainApi.js";
-import api from "../../utils/api.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import "../../index.css";
@@ -20,17 +19,18 @@ import SaveBookModal from "../SaveBookModal/SaveBookModal.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+
   const [currentUser, setCurrentUser] = useState(() => {
     const savedUser = localStorage.getItem("currentUser");
     return savedUser ? JSON.parse(savedUser) : {};
   });
-  const [savedBooks, setSavedBooks] = useState([]);
   const [isCheckingToken, setIsCheckingToken] = useState(
     !!localStorage.getItem("jwt"),
   );
+  const [savedBooks, setSavedBooks] = useState([]);
   const navigate = useNavigate();
+
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
@@ -41,11 +41,6 @@ function App() {
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [isSaveBookModalOpen, setIsSaveBookModalOpen] = useState(false);
   const [selectedBookToSave, setSelectedBookToSave] = useState(null);
-
-  const loadUserBooks = (email) => {
-    const localBooks = localStorage.getItem(`mySavedBooks_${email}`);
-    setSavedBooks(localBooks ? JSON.parse(localBooks) : []);
-  };
 
   const closeAllPopups = () => {
     setIsAboutPopupOpen(false);
@@ -63,12 +58,14 @@ function App() {
   }, [currentUser]);
 
   const handleUpdateProfile = (data) => {
-    setCurrentUser((prevUser) => ({
-      ...prevUser,
-      name: data.name,
-      avatar: data.avatar,
-    }));
-    closeAllPopups();
+    MainApi.updateUserInfo(data)
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error("Error al actualizar el perfil:", err);
+      });
   };
 
   useEffect(() => {
@@ -78,8 +75,6 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            setUserEmail(res.data.email);
-            loadUserBooks(res.data.email);
           }
         })
         .catch((err) => console.error(err))
@@ -89,8 +84,30 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (loggedIn) {
+      MainApi.getUserInfo()
+        .then((userData) => {
+          setCurrentUser({
+            ...userData,
+            avatar: userData.avatar || "",
+            name: userData.name || "",
+          });
+        })
+        .catch((err) => console.error("Error al obtener usuario:", err));
+
+      MainApi.getSavedBooks()
+        .then((booksFromServer) => {
+          setSavedBooks(booksFromServer.reverse());
+        })
+        .catch((err) => console.error("Error al cargar la biblioteca:", err));
+    }
+  }, [loggedIn]);
+
   const handleSaveBookClick = (book) => {
-    const isAlreadySaved = savedBooks.some((b) => b.id === book.id);
+    const isAlreadySaved = savedBooks.some(
+      (b) => b.bookId === book.id || b.id === book.id,
+    );
 
     if (!isAlreadySaved) {
       setSelectedBookToSave(book);
@@ -101,17 +118,28 @@ function App() {
   };
 
   const confirmSaveBook = ({ book, meta }) => {
-    const bookWithMeta = { ...book, userMeta: meta };
-    const updatedBooks = [bookWithMeta, ...savedBooks];
+    const bookDataToSave = {
+      bookId: book.id,
+      title: book.volumeInfo?.title || "Sin título",
+      authors: book.volumeInfo?.authors
+        ? book.volumeInfo.authors.join(", ")
+        : "Desconocido",
+      description: book.volumeInfo?.description || "Sin descripción",
+      image:
+        book.volumeInfo?.imageLinks?.thumbnail ||
+        "https://via.placeholder.com/150",
+      link: book.volumeInfo?.infoLink || "",
+      startDate: meta.startDate,
+      endDate: meta.endDate || "",
+      status: meta.status,
+    };
 
-    setSavedBooks(updatedBooks);
-
-    localStorage.setItem(
-      `mySavedBooks_${userEmail}`,
-      JSON.stringify(updatedBooks),
-    );
-
-    closeAllPopups();
+    MainApi.saveBook(bookDataToSave)
+      .then((savedBookFromServer) => {
+        setSavedBooks([savedBookFromServer, ...savedBooks]);
+        closeAllPopups();
+      })
+      .catch((err) => console.error("Error al guardar libro:", err));
   };
 
   const handleLogin = (email, password) => {
@@ -120,8 +148,6 @@ function App() {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           setLoggedIn(true);
-          setUserEmail(email);
-          loadUserBooks(email);
           closeAllPopups();
           navigate("/");
         }
@@ -157,7 +183,7 @@ function App() {
     localStorage.removeItem("currentUser");
     setLoggedIn(false);
     setCurrentUser({});
-    setUserEmail("");
+    setSavedBooks([]);
     navigate("/");
   };
 
@@ -172,23 +198,6 @@ function App() {
       })
       .finally(() => setIsLoading(false));
   };
-
-  useEffect(() => {
-    if (loggedIn) {
-      api
-        .getUserInfo()
-        .then((userData) => {
-          const savedUser = localStorage.getItem("currentUser");
-          const localUserData = savedUser ? JSON.parse(savedUser) : {};
-          setCurrentUser({
-            ...userData,
-            avatar: localUserData.avatar || userData.avatar || "",
-            name: localUserData.name || userData.name || "",
-          });
-        })
-        .catch((err) => console.error(err));
-    }
-  }, [loggedIn]);
 
   if (isCheckingToken) {
     return null;
@@ -269,12 +278,11 @@ function App() {
           onClose={closeAllPopups}
           onUpdateProfile={handleUpdateProfile}
         />
+
         {isAboutPopupOpen && (
           <About isOpen={isAboutPopupOpen} onClose={closeAllPopups} />
         )}
-        {isAboutPopupOpen && (
-          <About isOpen={isAboutPopupOpen} onClose={closeAllPopups} />
-        )}
+
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
           onClose={closeTooltipAndRedirect}
