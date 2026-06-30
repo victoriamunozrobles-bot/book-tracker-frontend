@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useFormAndValidation } from "../../utils/useFormAndValidation";
 import "./login.css";
 
@@ -6,20 +5,16 @@ export default function Login({
   isOpen,
   onClose,
   handleLogin,
+  apiError,
   onSwitchToRegister,
 }) {
   const { values, handleChange, errors, isValid } = useFormAndValidation();
-  const [apiError, setApiError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid) return;
 
-    setApiError("");
-    handleLogin(values.email, values.password).catch((err) => {
-      console.error("Detalle técnico del error:", err);
-      setApiError("Correo o contraseña incorrectos.");
-    });
+    handleLogin(values.email, values.password);
   };
 
   return (

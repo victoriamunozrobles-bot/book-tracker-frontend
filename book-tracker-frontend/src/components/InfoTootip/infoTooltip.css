@@ -1,5 +1,3 @@
-/* --- InfoTooltip.css --- */
-
 .tooltip {
   display: flex;
   align-items: center;
@@ -66,12 +64,12 @@
 }
 
 .tooltip__icon_type_success {
-  background-color: #4caf50; /* Cambiar por tu SVG de éxito en producción */
+  background-color: #4caf50;
   border-radius: 50%;
 }
 
 .tooltip__icon_type_error {
-  background-color: #f44336; /* Cambiar por tu SVG de error en producción */
+  background-color: #f44336;
   border-radius: 50%;
 }
 

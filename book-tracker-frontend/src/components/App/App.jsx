@@ -43,6 +43,7 @@ function App() {
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [isSaveBookModalOpen, setIsSaveBookModalOpen] = useState(false);
   const [selectedBookToSave, setSelectedBookToSave] = useState(null);
+  const [apiError, setApiError] = useState("");
 
   const closeAllPopups = () => {
     setIsAboutPopupOpen(false);
@@ -51,6 +52,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsSaveBookModalOpen(false);
     setSelectedBookToSave(null);
+    setApiError("");
   };
 
   useEffect(() => {
@@ -143,6 +145,7 @@ function App() {
   };
 
   const handleLogin = (email, password) => {
+    setApiError("");
     return MainApi.authorize(email, password)
       .then((data) => {
         if (data.token) {
@@ -152,7 +155,10 @@ function App() {
           navigate("/");
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setApiError(err.message || "Correo o contraseña incorrectos.");
+      });
   };
 
   const closeTooltipAndRedirect = () => {
@@ -260,6 +266,7 @@ function App() {
           isOpen={isLoginPopupOpen}
           onClose={closeAllPopups}
           handleLogin={handleLogin}
+          apiError={apiError}
           onSwitchToRegister={() => {
             setIsLoginPopupOpen(false);
             setIsRegisterPopupOpen(true);
