@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BookCard from "../BookCard/BookCard.jsx";
-import "./BookGallery.css";
+import "./bookGallery.css";
 import bookCover from "../../images/book-cover.svg";
 
 export default function BookGallery({

@@ -1,6 +1,7 @@
 import exampleImg from "../../images/example.webp";
 import add from "../../images/add-icon.svg";
 import { useState } from "react";
+import "./bookCard.css";
 
 export default function BookCard({
   book,

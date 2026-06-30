@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import * as MainApi from "../../utils/MainApi.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import "./App.css";
 import "../../index.css";
 import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";

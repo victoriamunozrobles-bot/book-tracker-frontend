@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./InfoTooltip.css";
+import "./infoTooltip.css";
 
 export default function InfoTooltip({ isOpen, onClose, isSuccess }) {
   return (

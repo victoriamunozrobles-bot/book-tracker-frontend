@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./noteModal.css";
 
 export default function NoteModal({ book, onClose, onSaveNote }) {
   const [noteText, setNoteText] = useState("");

@@ -1,3 +1,5 @@
+import "./footer.css";
+
 export default function Footer({ userEmail }) {
   return (
     <footer className="footer">

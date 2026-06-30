@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BookCard from "../BookCard/BookCard.jsx";
 import NoteModal from "../NoteModal/NoteModal.jsx";
+import "./library.css";
 
 export default function Library({ savedBooks, setSavedBooks }) {
   const [selectedBookForNotes, setSelectedBookForNotes] = useState(null);

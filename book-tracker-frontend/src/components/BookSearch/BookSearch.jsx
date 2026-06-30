@@ -1,5 +1,6 @@
 import searchIcon from "../../images/search-icon.svg";
 import { useState } from "react";
+import "./bookSearch.css";
 
 export default function BookSearch({ onSearch }) {
   const [query, setQuery] = useState("");
