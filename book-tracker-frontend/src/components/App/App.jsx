@@ -16,6 +16,7 @@ import InfoTooltip from "../InfoTootip/InfoTooltip.jsx";
 import LandingPage from "../LandingPage/LandingPage.jsx";
 import EditProfile from "../EditProfile/EditProfile.jsx";
 import SaveBookModal from "../SaveBookModal/SaveBookModal.jsx";
+import Footer from "../Footer/Footer.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -251,6 +252,8 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
+
+        <Footer userEmail={currentUser.email || ""} />
 
         <Login
           isOpen={isLoginPopupOpen}

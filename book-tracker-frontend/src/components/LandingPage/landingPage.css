@@ -44,3 +44,56 @@
   transform: translate(8px, 8px);
   box-shadow: 0px 0px 0px #000000;
 }
+
+@media screen and (max-width: 768px) {
+  .landing {
+    padding: 60px 20px;
+  }
+
+  .landing__title {
+    font-size: 32px;
+  }
+
+  .landing__subtitle {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .landing__cta-button {
+    font-size: 18px;
+    padding: 12px 25px;
+    box-shadow: 6px 6px 0px #000000;
+  }
+
+  .landing__cta-button:active {
+    transform: translate(6px, 6px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .landing {
+    padding: 40px 15px;
+  }
+
+  .landing__title {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+  .landing__subtitle {
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+
+  .landing__cta-button {
+    font-size: 16px;
+    padding: 12px 20px;
+    border: 3px solid #000000;
+    box-shadow: 4px 4px 0px #000000;
+  }
+
+  .landing__cta-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #000000;
+  }
+}
