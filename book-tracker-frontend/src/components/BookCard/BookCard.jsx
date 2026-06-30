@@ -52,11 +52,34 @@ export default function BookCard({
       <img className="book-card__image" src={coverImage} alt={title} />
 
       <div className="book-card__content">
+        {book.userMeta && (
+          <div className="book-card__meta">
+            <span
+              className={`book-card__status ${book.userMeta.status === "Leyendo" ? "book-card__status_reading" : "book-card__status_finished"}`}
+            >
+              {book.userMeta.status === "Leyendo"
+                ? "📖 Leyendo"
+                : "✅ Terminado"}
+            </span>
+
+            <div className="book-card__dates">
+              <p>
+                <strong>Inicio:</strong> {book.userMeta.startDate}
+              </p>
+
+              {book.userMeta.status === "Terminado" &&
+                book.userMeta.endDate && (
+                  <p>
+                    <strong>Fin:</strong> {book.userMeta.endDate}
+                  </p>
+                )}
+            </div>
+          </div>
+        )}
         <div className="book-card__header">
           <h2 className="book-card__title">{title}</h2>
           <p className="book-card__author">{author}</p>
         </div>
-
         <div className="book-card__synopsis-container">
           <p className="book-card__synopsis">{synopsis}</p>
         </div>

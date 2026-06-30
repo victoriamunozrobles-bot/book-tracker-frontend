@@ -53,6 +53,7 @@ function App() {
     setIsRegisterPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsSaveBookModalOpen(false);
+    setSelectedBookToSave(null);
   };
 
   useEffect(() => {
