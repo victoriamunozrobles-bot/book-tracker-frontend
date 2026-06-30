@@ -16,6 +16,7 @@ import About from "../About/About.jsx";
 import InfoTooltip from "../InfoTootip/InfoTooltip.jsx";
 import LandingPage from "../LandingPage/LandingPage.jsx";
 import EditProfile from "../EditProfile/EditProfile.jsx";
+import SaveBookModal from "../form/SaveBookModal/SaveBookModal.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -33,33 +34,25 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const [isBooksLoaded, setIsBooksLoaded] = useState(false);
   const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+  const [isSaveBookModalOpen, setIsSaveBookModalOpen] = useState(false);
+  const [selectedBookToSave, setSelectedBookToSave] = useState(null);
 
   const loadUserBooks = (email) => {
     const localBooks = localStorage.getItem(`mySavedBooks_${email}`);
     setSavedBooks(localBooks ? JSON.parse(localBooks) : []);
-    setIsBooksLoaded(true);
   };
-
-  useEffect(() => {
-    if (loggedIn && userEmail && isBooksLoaded) {
-      localStorage.setItem(
-        `mySavedBooks_${userEmail}`,
-        JSON.stringify(savedBooks),
-      );
-    }
-  }, [savedBooks, userEmail, loggedIn, isBooksLoaded]);
 
   const closeAllPopups = () => {
     setIsAboutPopupOpen(false);
     setIsLoginPopupOpen(false);
     setIsRegisterPopupOpen(false);
     setIsEditProfilePopupOpen(false);
+    setIsSaveBookModalOpen(false);
   };
 
   useEffect(() => {
@@ -95,11 +88,29 @@ function App() {
     }
   }, []);
 
-  const handleSaveBook = (bookToSave) => {
-    const isAlreadySaved = savedBooks.some((book) => book.id === bookToSave.id);
+  const handleSaveBookClick = (book) => {
+    const isAlreadySaved = savedBooks.some((b) => b.id === book.id);
+
     if (!isAlreadySaved) {
-      setSavedBooks([bookToSave, ...savedBooks]);
+      setSelectedBookToSave(book);
+      setIsSaveBookModalOpen(true);
+    } else {
+      console.log("Este libro ya está en tu biblioteca.");
     }
+  };
+
+  const confirmSaveBook = ({ book, meta }) => {
+    const bookWithMeta = { ...book, userMeta: meta };
+    const updatedBooks = [bookWithMeta, ...savedBooks];
+
+    setSavedBooks(updatedBooks);
+
+    localStorage.setItem(
+      `mySavedBooks_${userEmail}`,
+      JSON.stringify(updatedBooks),
+    );
+
+    closeAllPopups();
   };
 
   const handleLogin = (email, password) => {
@@ -221,7 +232,7 @@ function App() {
                     <BookSearch onSearch={handleSearch} />
                     <BookGallery
                       searchResults={searchResults}
-                      onSaveBook={handleSaveBook}
+                      onSaveBook={handleSaveBookClick}
                       isLoading={isLoading}
                       hasSearched={hasSearched}
                     />
@@ -267,6 +278,12 @@ function App() {
           isOpen={isInfoTooltipOpen}
           onClose={closeTooltipAndRedirect}
           isSuccess={isRegistrationSuccess}
+        />
+        <SaveBookModal
+          isOpen={isSaveBookModalOpen}
+          onClose={closeAllPopups}
+          onConfirmSave={confirmSaveBook}
+          book={selectedBookToSave}
         />
       </div>
     </CurrentUserContext.Provider>

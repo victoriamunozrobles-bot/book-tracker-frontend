@@ -41,7 +41,6 @@ export default function EditProfile({ isOpen, onClose, onUpdateProfile }) {
         <h2 className="edit-popup__title">EDITAR PERFIL</h2>
 
         <form className="edit-popup__form" onSubmit={handleSubmit} noValidate>
-          {/* CAMPO DE NOMBRE */}
           <input
             className="edit-popup__input"
             type="text"
