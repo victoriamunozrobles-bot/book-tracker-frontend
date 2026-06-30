@@ -168,16 +168,69 @@
   box-shadow: 4px 4px 0px #000000;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 768px) {
   .header {
-    flex-direction: column;
-    gap: 20px;
+    gap: 10px;
   }
 
-  .header__logo-area,
-  .header__nav,
+  .header__title {
+    font-size: 20px;
+  }
+
+  .header__nav {
+    gap: 5px;
+  }
+
+  .header__nav-link {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .header__user-info {
+    font-size: 13px;
+    padding: 0;
+  }
+
+  .header__avatar {
+    width: 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo actions"
+      "nav nav";
+    padding: 0 0 15px 0;
+    gap: 15px;
+  }
+
+  .header__logo-area {
+    grid-area: logo;
+    align-items: center;
+  }
+
+  .header__title {
+    font-size: 20px;
+  }
+
   .header__actions {
-    justify-content: center;
+    grid-area: actions;
+    justify-content: flex-end;
+  }
+
+  .header__nav {
+    grid-area: nav;
     width: 100%;
+    gap: 10px;
+  }
+
+  .header__nav-link {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
   }
 }
