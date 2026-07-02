@@ -3,17 +3,14 @@ import BookCard from "../BookCard/BookCard.jsx";
 import NoteModal from "../NoteModal/NoteModal.jsx";
 import "./library.css";
 
-export default function Library({ savedBooks, setSavedBooks }) {
+export default function Library({ savedBooks, setSavedBooks, onDeleteBook }) {
   const [selectedBookForNotes, setSelectedBookForNotes] = useState(null);
   const [selectedBookForDetails, setSelectedBookForDetails] = useState(null);
 
   const getId = (book) => book._id || book.id;
 
   const handleRemoveBook = (bookToRemove) => {
-    const updatedBooks = savedBooks.filter(
-      (book) => getId(book) !== getId(bookToRemove),
-    );
-    setSavedBooks(updatedBooks);
+    onDeleteBook(getId(bookToRemove));
     setSelectedBookForDetails(null);
   };
 
@@ -87,7 +84,7 @@ export default function Library({ savedBooks, setSavedBooks }) {
 
             return (
               <article
-                key={getId(book)} /* ¡Aquí se arregla el warning de React! */
+                key={getId(book)}
                 className="book-gallery__item"
                 onClick={() => setSelectedBookForDetails(book)}
               >

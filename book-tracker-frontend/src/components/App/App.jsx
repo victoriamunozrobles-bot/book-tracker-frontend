@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import * as MainApi from "../../utils/MainApi.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useNavigate,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
 import "../../index.css";
 import Header from "../Header/Header.jsx";
@@ -32,6 +38,7 @@ function App() {
   );
   const [savedBooks, setSavedBooks] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +61,15 @@ function App() {
     setSelectedBookToSave(null);
     setApiError("");
   };
+
+  useEffect(() => {
+    if (location.state?.requireLogin) {
+      setTimeout(() => {
+        setIsLoginPopupOpen(true);
+      }, 0);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (currentUser && Object.keys(currentUser).length > 0) {
@@ -116,8 +132,6 @@ function App() {
     if (!isAlreadySaved) {
       setSelectedBookToSave(book);
       setIsSaveBookModalOpen(true);
-    } else {
-      console.log("Este libro ya está en tu biblioteca.");
     }
   };
 
@@ -142,6 +156,14 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.error("Error al guardar libro:", err));
+  };
+
+  const handleDeleteBook = (bookId) => {
+    MainApi.deleteBook(bookId)
+      .then(() => {
+        setSavedBooks((prevBooks) => prevBooks.filter((b) => b._id !== bookId));
+      })
+      .catch((err) => console.error("Error al eliminar el libro:", err));
   };
 
   const handleLogin = (email, password) => {
@@ -232,6 +254,7 @@ function App() {
                   <Library
                     savedBooks={savedBooks}
                     setSavedBooks={setSavedBooks}
+                    onDeleteBook={handleDeleteBook}
                   />
                 ) : (
                   <LandingPage
