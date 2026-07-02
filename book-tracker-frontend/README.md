@@ -2,6 +2,8 @@
 
 Este repositorio contiene el código de la interfaz de usuario de **Book Tracker**, una aplicación web diseñada para buscar, registrar y organizar lecturas personales. Este proyecto representa un paso muy importante en mi camino de aprendizaje como desarrolladora Full Stack, enfocándome en la integración segura entre el cliente y el servidor.
 
+Enlace a la aplicación en vivo: [https://book-tracker.mooo.com/](https://book-tracker.mooo.com/)
+
 ## Funcionalidades
 
 Actualmente, la aplicación cuenta con las siguientes características:
