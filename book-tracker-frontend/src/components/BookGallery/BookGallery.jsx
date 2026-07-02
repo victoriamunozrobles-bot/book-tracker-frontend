@@ -35,9 +35,8 @@ export default function BookGallery({
     <>
       <ul className="book-gallery__list">
         {searchResults.map((book) => {
-          const coverImage = book.volumeInfo?.imageLinks?.thumbnail || (
-            <img src={bookCover} alt={book.volumeInfo.title} />
-          );
+          const coverImage =
+            book.volumeInfo?.imageLinks?.thumbnail || bookCover;
           const title = book.volumeInfo?.title || "Sin título";
 
           return (
