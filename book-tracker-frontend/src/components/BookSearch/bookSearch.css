@@ -1,0 +1,89 @@
+.book-search__search-bar {
+  margin: 0 auto 40px auto;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.book-search__form {
+  display: flex;
+  background-color: #fdfbf7;
+  border: 3px solid #0a100d;
+  border-radius: 0px;
+  box-shadow: 3px 3px 0px #0a100d;
+  transition: all 0.2s ease;
+}
+
+.book-search__form:focus-within {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #0a100d;
+}
+
+.book-search__input {
+  flex: 1;
+  flex-grow: 1;
+  min-width: 0;
+  padding: 15px 20px;
+  font-size: 1.1rem;
+  font-family: monospace;
+  font-weight: bold;
+  color: #0a100d;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.book-search-input:focus {
+  background-color: #c8b9eb;
+}
+
+.book-search__input::placeholder {
+  color: #6d4c3d;
+  font-weight: normal;
+}
+
+.book-search__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+  background-color: transparent;
+  border: none;
+  border-left: 3px solid #0a100d;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.book-search__button:hover {
+  background-color: #f4c4d9;
+}
+
+.book-search-button:active {
+  background-color: #c8b9eb;
+}
+
+.book-search__button img {
+  width: 24px;
+  height: auto;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 500px) {
+  .book-search {
+    max-width: 100%;
+    padding: 0 5px;
+    margin-bottom: 25px;
+  }
+
+  .book-search__input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .book-search__form {
+    box-shadow: 3px 3px 0px #0a100d;
+  }
+  .book-search__button {
+    padding: 0 15px;
+  }
+}

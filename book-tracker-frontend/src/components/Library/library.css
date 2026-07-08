@@ -1,0 +1,131 @@
+.library {
+  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.library__header {
+  margin-bottom: 40px;
+  border-bottom: 4px solid #0a100d;
+  padding-bottom: 20px;
+}
+
+.library__title {
+  font-family: monospace;
+  font-size: 3rem;
+  color: #0a100d;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.library__subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 0;
+}
+
+.library__empty-state {
+  background-color: #ffeb66;
+  border: 4px dashed #0a100d;
+  padding: 60px 20px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 1.3rem;
+  color: #0a100d;
+  font-weight: bold;
+  box-shadow: 8px 8px 0px #0a100d;
+}
+
+.book-gallery__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+}
+
+.book-gallery__item {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #0a100d;
+  box-shadow: 6px 6px 0px #0a100d;
+  background-color: #fff;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.book-gallery__item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #0a100d;
+}
+
+.book-gallery__image {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-bottom: 3px solid #0a100d;
+}
+
+.book-gallery__title {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+  color: #0a100d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 768px) {
+  .library__title {
+    font-size: 2.5rem;
+  }
+
+  .library__header {
+    margin-bottom: 30px;
+  }
+
+  .book-gallery__list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .library__title {
+    font-size: 2rem;
+    letter-spacing: -1px;
+  }
+
+  .library__header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+  }
+
+  .library__empty-state {
+    padding: 40px 15px;
+    font-size: 1.1rem;
+    box-shadow: 4px 4px 0px #0a100d;
+  }
+
+  .book-gallery__list {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 15px;
+    padding: 10px 0;
+  }
+
+  .book-gallery__title {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+
+  .book-gallery__item {
+    border: 2px solid #0a100d;
+    box-shadow: 4px 4px 0px #0a100d;
+  }
+}

@@ -1,0 +1,267 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 20px 0;
+  border-bottom: 4px solid #000000;
+  margin-bottom: 30px;
+  position: relative;
+  background-color: transparent;
+}
+
+.header__title {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 28px;
+  font-weight: 900;
+  color: #000000;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.header__actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  align-items: center;
+}
+
+.header__button {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.1s ease;
+  padding: 8px 16px;
+}
+
+.header__button_type_text {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.header__button_type_solid {
+  background-color: #ffeb66;
+  color: #000000;
+}
+
+.header__button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px #000000;
+}
+
+.header__profile {
+  position: relative;
+}
+
+.header__user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 3px solid transparent;
+}
+
+.header__user-info:hover {
+  border: 3px solid #000000;
+  background-color: #ffde00;
+}
+
+.header__name {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #000000;
+  background-size: cover;
+  background-position: center;
+  background-color: #ffffff;
+}
+
+.header__arrow {
+  font-size: 12px;
+  color: #000000;
+}
+
+.header__dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 6px 6px 0px #000000;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 0;
+  z-index: 100;
+}
+
+.header__dropdown-item {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid #000000;
+  text-align: left;
+  padding: 12px 20px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000000;
+}
+
+.header__dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.header__dropdown-item:hover {
+  background-color: #ffde00;
+}
+
+.header__logo-area {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.header__logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header__nav {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__nav-link {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.header__nav-link:hover {
+  background-color: #ffde00;
+  border: 3px solid #000000;
+}
+
+.header__nav-link_active {
+  background-color: #ffde00;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    gap: 10px;
+  }
+
+  .header__title {
+    font-size: 18px;
+  }
+
+  .header__button {
+    padding: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    height: 38px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__nav {
+    gap: 5px;
+  }
+
+  .header__nav-link {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .header__user-info {
+    font-size: 13px;
+    padding: 0;
+  }
+
+  .header__avatar {
+    width: 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo actions"
+      "nav nav";
+    padding: 0 0 15px 0;
+    gap: 15px;
+  }
+
+  .header__logo-area {
+    grid-area: logo;
+    align-items: center;
+  }
+
+  .header__title {
+    font-size: 20px;
+  }
+
+  .header__actions {
+    grid-area: actions;
+    justify-content: flex-end;
+  }
+
+  .header__nav {
+    grid-area: nav;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .header__nav-link {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
+  }
+  .header__actions {
+    grid-area: actions;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .header__button {
+    font-size: 12px;
+    padding: 8px 12px;
+    width: 100%;
+    text-align: center;
+    border: 3px solid #000000;
+    box-shadow: 4px 4px 0px #000000;
+  }
+
+  .header__button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #000000;
+  }
+}
